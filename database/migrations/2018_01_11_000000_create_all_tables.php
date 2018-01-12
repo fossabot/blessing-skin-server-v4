@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
         Schema::create('players', function (Blueprint $table) {
             $table->increments('pid');
             $table->integer('uid');
-            $table->string('player_name');
+            $table->string('player_name')->unique();
             $table->string('preference')->default('default');
             $table->integer('tid_steve')->default(0);
             $table->integer('tid_alex')->default(0);
@@ -54,6 +54,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('uid');
             $table->integer('tid');
+            $table->string('item_name');
         });
     }
 

@@ -23,4 +23,19 @@ class Player extends Model
     {
         return $this->belongsTo('App\Models\User', 'uid', 'uid');
     }
+
+    public function steve()
+    {
+        return $this->hasOne('App\Models\Texture', 'tid', 'tid_steve');
+    }
+
+    public function alex()
+    {
+        return $this->hasOne('App\Models\Texture', 'tid', 'tid_alex');
+    }
+
+    public function cape()
+    {
+        return $this->hasOne('App\Models\Texture', 'tid', 'tid_cape');
+    }
 }

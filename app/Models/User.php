@@ -29,6 +29,8 @@ class User extends Authenticatable
 
     public function closet()
     {
-        return $this->belongsToMany('App\Models\Texture', 'closets', 'uid', 'tid');
+        return $this
+            ->belongsToMany('App\Models\Texture', 'closets', 'uid', 'tid')
+            ->withPivot('item_name');
     }
 }
