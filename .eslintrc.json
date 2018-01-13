@@ -1,0 +1,27 @@
+{
+    "extends": ["eslint:recommended", "plugin:vue/essential"],
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2017
+    },
+    "root": true,
+    "env": {
+        "node": true,
+        "es6": true,
+        "browser": true,
+        "jest": true
+    },
+    "plugins": ["vue"],
+    "rules": {
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "object-curly-spacing": ["error", "always"],
+        "no-unused-vars": "warn",
+        "no-console": "off",
+        "comma-style": ["warn", "last"],
+        "prefer-const": "warn",
+        "no-var": "error",
+        "eqeqeq": "error"
+    }
+}

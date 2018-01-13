@@ -1,10 +1,12 @@
 /node_modules
+/public/assets
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
 /.idea
 /.vagrant
+/.DS_Store
 Homestead.json
 Homestead.yaml
 npm-debug.log
@@ -14,3 +16,6 @@ private_scripts
 _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
+resources/views/index.blade.php
+resources/assets/config/*.tmp
+resources/assets/config/env.js
