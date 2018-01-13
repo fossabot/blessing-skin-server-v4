@@ -1,5 +1,5 @@
 {
-    "extends": ["eslint:recommended", "plugin:vue/essential"],
+    "extends": ["eslint:recommended"],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2017
@@ -11,7 +11,6 @@
         "browser": true,
         "jest": true
     },
-    "plugins": ["vue"],
     "rules": {
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],
