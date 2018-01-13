@@ -48,7 +48,7 @@ class AuthController extends Controller
         if (app('cipher')->verify($credentials['password'], $user->password)) {
             $this->clearLoginAttempts($request);
 
-            return response()->json(['token' => Auth::login($user)]);
+            return response()->json(['token' => Auth::login($user)], 201);
         }
 
         $this->incrementLoginAttempts($request);
@@ -59,6 +59,6 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return response()->json(['code' => 0]);
+        return response(null, 204);
     }
 }
