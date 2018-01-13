@@ -20,9 +20,19 @@ class AppServiceProvider extends ServiceProvider
      * Register any application services.
      *
      * @return void
+     * @throws \Exception
      */
     public function register()
     {
-        //
+        $className = 'App\Services\Cipher\\'.config('auth.cipher');
+
+        if (class_exists($className)) {
+            $this->app->singleton('cipher', $className);
+        } else {
+            throw new \Exception(sprintf(
+                "No such encrypt method: [%s], please check your .env configuration.",
+                config('secure.cipher')
+            ));
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Faker\Generator as Faker;
 
 /*
@@ -13,16 +14,61 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Models\User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     return [
         'nickname' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => str_random(),
+        'password' => app('cipher')->hash(str_random(10)),
         'remember_token' => null,
         'score' => random_int(0, 500),
         'avatar' => random_int(0, 50),
         'ip' => $faker->ipv4,
         'permission' => 0,
+        'last_signed_at' => $faker->dateTime,
+        'registered_at' => $faker->dateTime
+    ];
+});
+
+$factory->define(User::class, 'admin', function (Faker $faker) {
+    return [
+        'nickname' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => app('cipher')->hash(str_random(10)),
+        'remember_token' => null,
+        'score' => random_int(0, 500),
+        'avatar' => random_int(0, 50),
+        'ip' => $faker->ipv4,
+        'permission' => 1,
+        'last_signed_at' => $faker->dateTime,
+        'registered_at' => $faker->dateTime
+    ];
+});
+
+$factory->define(User::class, 'superAdmin', function (Faker $faker) {
+    return [
+        'nickname' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => app('cipher')->hash(str_random(10)),
+        'remember_token' => null,
+        'score' => random_int(0, 500),
+        'avatar' => random_int(0, 50),
+        'ip' => $faker->ipv4,
+        'permission' => 2,
+        'last_signed_at' => $faker->dateTime,
+        'registered_at' => $faker->dateTime
+    ];
+});
+
+$factory->define(User::class, 'banned', function (Faker $faker) {
+    return [
+        'nickname' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => app('cipher')->hash(str_random(10)),
+        'remember_token' => null,
+        'score' => random_int(0, 500),
+        'avatar' => random_int(0, 50),
+        'ip' => $faker->ipv4,
+        'permission' => -1,
         'last_signed_at' => $faker->dateTime,
         'registered_at' => $faker->dateTime
     ];
