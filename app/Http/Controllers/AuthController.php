@@ -24,7 +24,7 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'identification' => 'required',
-            'password' => 'required|max:64'
+            'password' => 'required|min:6|max:64'
         ]);
 
         $credentials = $request->only(['identification', 'password']);
@@ -41,10 +41,14 @@ class AuthController extends Controller
             : Player::where('player_name', $credentials['identification'])
                 ->first()->owner;
 
+        if (!$user) {
+            return response(null, 404);
+        }
+
         if (app('cipher')->verify($credentials['password'], $user->password)) {
             $this->clearLoginAttempts($request);
 
-            return response()->json(['code' => 0, 'token' => Auth::login($user)], 201);
+            return response()->json(['token' => Auth::login($user)]);
         }
 
         $this->incrementLoginAttempts($request);
