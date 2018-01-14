@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const notifier = require('node-notifier');
 
 module.exports = merge(webpackBaseConfig, {
     devtool: '#source-map',
@@ -24,6 +26,23 @@ module.exports = merge(webpackBaseConfig, {
             filename: './index.html',
             template: './resources/assets/template/index.ejs',
             inject: false
+        }),
+        new FriendlyErrorsWebpackPlugin({
+            clearConsole: true,
+            onErrors: (severity, errors) => {
+                if (severity !== 'error') {
+                    return;
+                }
+                const error = errors[0];
+                notifier.notify({
+                    title: 'Webpack error',
+                    message: severity + ': ' + error.name,
+                    subtitle: error.file || ''
+                });
+            }
         })
-    ]
+    ],
+    devServer: {
+        quiet: true
+    }
 });

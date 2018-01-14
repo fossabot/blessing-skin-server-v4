@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: './resources/assets/main',
+        main: './resources/assets/main'
     },
     output: {
         path: path.join(__dirname, './public/assets')
@@ -21,20 +21,33 @@ module.exports = {
             },
             {
                 test: /\.vue$/,
-                use: [{
+                use: [
+                    {
                         loader: 'vue-loader',
                         options: {
                             loaders: {
                                 less: ExtractTextPlugin.extract({
-                                    use: ['css-loader?minimize', 'autoprefixer-loader', 'less-loader'],
+                                    use: [
+                                        'css-loader?minimize',
+                                        'autoprefixer-loader',
+                                        'less-loader'
+                                    ],
                                     fallback: 'vue-style-loader'
                                 }),
                                 stylus: ExtractTextPlugin.extract({
-                                    use: ['css-loader?minimize', 'autoprefixer-loader', 'stylus-loader'],
+                                    use: [
+                                        'css-loader?minimize',
+                                        'autoprefixer-loader',
+                                        'stylus-loader'
+                                    ],
                                     fallback: 'vue-style-loader'
                                 }),
                                 css: ExtractTextPlugin.extract({
-                                    use: ['css-loader', 'autoprefixer-loader', 'less-loader'],
+                                    use: [
+                                        'css-loader',
+                                        'autoprefixer-loader',
+                                        'less-loader'
+                                    ],
                                     fallback: 'vue-style-loader'
                                 })
                             }
@@ -77,7 +90,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            'vue': 'vue/dist/vue.esm.js'
+            vue: 'vue/dist/vue.esm.js'
         }
     }
 };
