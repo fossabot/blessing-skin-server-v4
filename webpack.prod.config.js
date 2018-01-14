@@ -27,7 +27,16 @@ module.exports = merge(webpackBaseConfig, {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendors',
-            filename: 'vendors.[hash].js'
+            filename: 'vendors.[hash].js',
+            minChunks (module) {
+                return (
+                  module.resource &&
+                  /\.js$/.test(module.resource) &&
+                  module.resource.indexOf(
+                    path.join(__dirname, 'node_modules')
+                  ) === 0
+                )
+              }
         }),
         new webpack.DefinePlugin({
             'process.env': {

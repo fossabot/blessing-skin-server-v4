@@ -5,7 +5,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     entry: {
         main: './resources/assets/main',
-        vendors: './resources/assets/vendors'
     },
     output: {
         path: path.join(__dirname, './public/assets')
