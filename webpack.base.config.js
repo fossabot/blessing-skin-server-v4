@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HappyPack = require('happypack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -27,27 +28,15 @@ module.exports = {
                         options: {
                             loaders: {
                                 less: ExtractTextPlugin.extract({
-                                    use: [
-                                        'css-loader?minimize',
-                                        'autoprefixer-loader',
-                                        'less-loader'
-                                    ],
+                                    use: ['happypack/loader?id=less'],
                                     fallback: 'vue-style-loader'
                                 }),
                                 stylus: ExtractTextPlugin.extract({
-                                    use: [
-                                        'css-loader?minimize',
-                                        'autoprefixer-loader',
-                                        'stylus-loader'
-                                    ],
+                                    use: ['happypack/loader?id=stylus'],
                                     fallback: 'vue-style-loader'
                                 }),
                                 css: ExtractTextPlugin.extract({
-                                    use: [
-                                        'css-loader',
-                                        'autoprefixer-loader',
-                                        'less-loader'
-                                    ],
+                                    use: ['happypack/loader?id=less'],
                                     fallback: 'vue-style-loader'
                                 })
                             }
@@ -62,18 +51,15 @@ module.exports = {
                 ]
             },
             {
-                test: /iview\/.*?js$/,
-                loader: 'babel-loader'
-            },
-            {
                 test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
+                use: 'happypack/loader?id=babel',
+                exclude: path.resolve(__dirname, 'node_modules'),
+                include: path.resolve(__dirname, 'resources', 'assets')
             },
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: ['css-loader?minimize', 'autoprefixer-loader'],
+                    use: ['happypack/loader?id=css'],
                     fallback: 'style-loader'
                 })
             },
@@ -89,8 +75,35 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.vue'],
+        modules: [path.resolve(__dirname, 'node_modules')],
         alias: {
             vue: 'vue/dist/vue.esm.js'
         }
-    }
+    },
+    plugins: [
+        new HappyPack({
+            id: 'babel',
+            loaders: ['babel-loader']
+        }),
+        new HappyPack({
+            id: 'css',
+            loaders: ['css-loader?minimize', 'autoprefixer-loader']
+        }),
+        new HappyPack({
+            id: 'less',
+            loaders: [
+                'css-loader?minimize',
+                'autoprefixer-loader',
+                'less-loader'
+            ]
+        }),
+        new HappyPack({
+            id: 'stylus',
+            loaders: [
+                'css-loader?minimize',
+                'autoprefixer-loader',
+                'stylus-loader'
+            ]
+        })
+    ]
 };
