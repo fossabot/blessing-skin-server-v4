@@ -31,10 +31,6 @@ module.exports = {
                                     use: ['happypack/loader?id=less'],
                                     fallback: 'vue-style-loader'
                                 }),
-                                stylus: ExtractTextPlugin.extract({
-                                    use: ['happypack/loader?id=stylus'],
-                                    fallback: 'vue-style-loader'
-                                }),
                                 css: ExtractTextPlugin.extract({
                                     use: ['happypack/loader?id=less'],
                                     fallback: 'vue-style-loader'
@@ -95,14 +91,6 @@ module.exports = {
                 'css-loader?minimize',
                 'autoprefixer-loader',
                 'less-loader'
-            ]
-        }),
-        new HappyPack({
-            id: 'stylus',
-            loaders: [
-                'css-loader?minimize',
-                'autoprefixer-loader',
-                'stylus-loader'
             ]
         })
     ]
