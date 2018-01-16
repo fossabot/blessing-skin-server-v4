@@ -26,6 +26,9 @@ module.exports = {
                     {
                         loader: 'vue-loader',
                         options: {
+                            preLoaders: {
+                                i18n: 'yaml-loader'
+                            },
                             loaders: {
                                 less: ExtractTextPlugin.extract({
                                     use: ['happypack/loader?id=less'],
@@ -34,7 +37,8 @@ module.exports = {
                                 css: ExtractTextPlugin.extract({
                                     use: ['happypack/loader?id=less'],
                                     fallback: 'vue-style-loader'
-                                })
+                                }),
+                                i18n: '@kazupon/vue-i18n-loader'
                             }
                         }
                     },

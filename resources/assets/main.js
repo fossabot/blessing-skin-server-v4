@@ -8,31 +8,33 @@ import App from './app.vue';
 import 'iview/dist/styles/iview.css';
 
 import VueI18n from 'vue-i18n';
-import Locales from './locale';
-import zhLocale from 'iview/src/locale/lang/zh-CN';
-import enLocale from 'iview/src/locale/lang/en-US';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueI18n);
 Vue.use(iView);
 
-// 自动设置语言
-const navLang = navigator.language;
-const localLang = (navLang === 'zh-CN' || navLang === 'en-US') ? navLang : false;
-const lang = window.localStorage.getItem('language') || localLang || 'zh-CN';
+function lang() {
+    const preset = localStorage.getItem('language');
+    if (preset) return preset;
 
-Vue.config.lang = lang;
+    const fallback = 'zh-cn';
+    const supported = ['zh-cn', 'en'];
+    const convertRules = {
+        'zh-hans': 'zh-cn',
+        'en-us': 'en'
+    };
 
-// 多语言配置
-const locales = Locales;
-const mergeZH = Object.assign(zhLocale, locales['zh-CN']);
-const mergeEN = Object.assign(enLocale, locales['en-US']);
-Vue.locale('zh-CN', mergeZH);
-Vue.locale('en-US', mergeEN);
+    const nav = navigator.language.toLowerCase();
+    if (supported.includes(nav)) {
+        return nav;
+    } else if (supported.includes(convertRules[nav])) {
+        return convertRules[nav];
+    } else {
+        return fallback;
+    }
+}
 
-
-// 路由配置
 const RouterConfig = {
     mode: 'hash',
     routes: Routers
@@ -50,26 +52,22 @@ router.afterEach(() => {
     window.scrollTo(0, 0);
 });
 
-
 const store = new Vuex.Store({
-    state: {
-
-    },
-    getters: {
-
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    }
+    state: {},
+    getters: {},
+    mutations: {},
+    actions: {}
 });
 
+const i18n = new VueI18n({
+    locale: lang(),
+    fallbackLocale: 'zh-cn'
+});
 
 new Vue({
     el: '#app',
-    router: router,
-    store: store,
+    router,
+    store,
+    i18n,
     render: h => h(App)
 });
