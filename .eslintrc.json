@@ -29,7 +29,6 @@
           "x-invalid-end-tag": false
         }],
         "vue/html-end-tags": "error",
-        "vue/html-self-closing": "error",
         "vue/mustache-interpolation-spacing": "error",
         "vue/no-multi-spaces": "error",
         "vue/v-bind-style": "error",
