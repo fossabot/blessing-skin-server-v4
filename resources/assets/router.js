@@ -1,9 +1,11 @@
-const routers = [{
-    path: '/',
-    meta: {
-        title: ''
-    },
-    component: (resolve) => require(['./views/index.vue'], resolve)
-}];
+const routers = [
+    {
+        path: '/',
+        meta: {
+            title: ''
+        },
+        component: () => import('./views/user/master.vue')
+    }
+];
 
 export default routers;
