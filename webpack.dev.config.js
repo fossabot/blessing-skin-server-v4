@@ -14,6 +14,11 @@ module.exports = merge(webpackBaseConfig, {
         chunkFilename: '[name].chunk.js'
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: "'development'"
+            }
+        }),
         new ExtractTextPlugin({
             filename: '[name].css',
             allChunks: true
