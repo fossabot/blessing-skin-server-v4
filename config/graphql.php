@@ -91,13 +91,11 @@ return [
         'default' => [
             'query' => [
                 'users' => GraphQL\Queries\UserQuery::class,
-                'user' => GraphQL\Queries\OneUserQuery::class,
                 'textures' => GraphQL\Queries\TextureQuery::class,
-                'players' => GraphQL\Queries\PlayerQuery::class
+                'players' => GraphQL\Queries\PlayerQuery::class,
+                'currentUser' => GraphQL\Queries\CurrentUserQuery::class,
             ],
-            'mutation' => [
-                //'example_mutation'  => ExampleMutation::class,
-            ],
+            'mutation' => [],
             'middleware' => []
         ],
     ],
