@@ -23,3 +23,10 @@ Route::group([
     $route->post('login', 'AuthController@login');
     $route->post('logout', 'AuthController@logout');
 });
+
+// Information of site
+Route::group([
+    'prefix' => 'site'
+], function ($route) {
+    $route->any('announcement', 'OptionsController@announcement');
+});

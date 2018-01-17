@@ -34,5 +34,7 @@ class AppServiceProvider extends ServiceProvider
                 config('secure.cipher')
             ));
         }
+
+        $this->app->singleton('options', 'App\Services\Options');
     }
 }

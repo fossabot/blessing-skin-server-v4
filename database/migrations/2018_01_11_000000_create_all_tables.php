@@ -56,6 +56,12 @@ class CreateUsersTable extends Migration
             $table->integer('tid');
             $table->string('item_name');
         });
+
+        Schema::create('options', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('option_name');
+            $table->longText('option_value');
+        });
     }
 
     /**
