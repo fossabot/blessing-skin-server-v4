@@ -91,6 +91,7 @@ return [
         'default' => [
             'query' => [
                 'users' => GraphQL\Queries\UserQuery::class,
+                'user' => GraphQL\Queries\OneUserQuery::class,
                 'textures' => GraphQL\Queries\TextureQuery::class,
                 'players' => GraphQL\Queries\PlayerQuery::class
             ],

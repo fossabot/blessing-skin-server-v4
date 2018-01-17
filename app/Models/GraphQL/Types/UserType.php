@@ -56,7 +56,7 @@ class UserType extends GraphQLType
                 'description' => 'Timestamp of registered.'
             ],
             'players' => [
-                'type' => Type::nonNull(Type::listOf(GraphQL::type('Player'))),
+                'type' => Type::listOf(GraphQL::type('Player')),
                 'description' => 'Players the user owned.'
             ],
             'closet' => [
