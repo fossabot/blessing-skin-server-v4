@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import iView from 'iview';
-import Vuex from 'vuex';
 import 'iview/dist/styles/iview.css';
 
 import VueI18n from 'vue-i18n';
@@ -13,9 +12,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import VueApollo from 'vue-apollo';
 
 import router from './libs/router';
+import store from './libs/store';
 import App from './app.vue';
 
-Vue.use(Vuex);
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.use(VueApollo);
@@ -40,13 +39,6 @@ function lang() {
         return fallback;
     }
 }
-
-const store = new Vuex.Store({
-    state: {},
-    getters: {},
-    mutations: {},
-    actions: {}
-});
 
 const i18n = new VueI18n({
     locale: lang(),
