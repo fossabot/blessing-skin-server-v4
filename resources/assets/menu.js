@@ -1,6 +1,6 @@
 export const user = [
     {
-        name: 'index',
+        name: 'dashboard',
         text: 'dashboard',
         icon: 'speedometer',
         link: '/user'

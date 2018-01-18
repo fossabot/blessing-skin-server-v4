@@ -4,7 +4,7 @@ const routers = [
         meta: {
             title: ''
         },
-        component: () => import('./views/user/index.vue')
+        component: () => import('./views/user/dashboard.vue')
     }
 ];
 
