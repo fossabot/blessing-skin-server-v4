@@ -1,36 +1,28 @@
 <template>
     <div class="layout">
         <Layout>
-            <Header>
-                <Menu mode="horizontal" theme="dark" active-name="1">
-                    <div class="layout-logo" />
-                    <div class="layout-nav">
-                        <MenuItem name="1">
-                            <Icon type="ios-navigate" />
-                            Item 1
-                        </MenuItem>
-                    </div>
-                </Menu>
-            </Header>
+            <header-bar />
             <Layout>
                 <Sider
                     breakpoint="md"
                     collapsible
                     class="sidebar"
                     v-model="sidebarCollapsed"
-                    :collapsed-width="75">
+                    :collapsed-width="75"
+                    :style="{ minHeight }">
                     <Menu
                         active-name="1-2"
                         theme="dark"
                         width="auto"
                         :open-names="['1']"
-                        :class="menuItemsClasses">
+                        :class="menuItemsClasses"
+                        @on-select="gotoLink">
                         <MenuItem
                             v-for="menuItem in userMenu"
                             :key="menuItem.name"
-                            :name="menuItem.name">
+                            :name="menuItem.link">
                             <Icon :type="menuItem.icon"></Icon>
-                            <span>{{ menuItem.text }}</span>
+                            <span v-t="`menu.${menuItem.text}`"></span>
                         </MenuItem>
                     </Menu>
                 </Sider>
@@ -45,10 +37,14 @@
 </template>
 
 <script>
+import HeaderBar from '../common/header-bar';
 import { user as userMenu } from '../../menu';
 
 export default {
     name: 'UserMaster',
+    components: {
+        HeaderBar
+    },
     data() {
         return {
             sidebarCollapsed: false,
@@ -58,8 +54,16 @@ export default {
     computed: {
         menuItemsClasses() {
             return ['menu-item', this.sidebarCollapsed ? 'collapsed-menu' : ''];
+        },
+        minHeight() {
+            return (window.innerHeight - 48 - 64) + 'px';
         }
-    }
+    },
+    methods: {
+        gotoLink(link) {
+            this.$router.push(link);
+        }
+    },
 };
 </script>
 
@@ -72,26 +76,8 @@ export default {
     overflow: hidden;
 }
 
-.layout-logo {
-    width: 100px;
-    height: 30px;
-    background: #5b6270;
-    border-radius: 3px;
-    float: left;
-    position: relative;
-    top: 15px;
-    left: 20px;
-}
-
-.layout-nav {
-    width: 420px;
-    margin: 0 auto;
-    margin-right: 20px;
-}
-
 .sidebar {
-    background: #fff;
-    min-height: 80vh;
+    min-height: 876px;
 }
 
 .content-layout {
@@ -132,3 +118,18 @@ export default {
     font-size: 22px;
 }
 </style>
+
+<i18n>
+en:
+    menu:
+        dashboard: Dashboard
+        closet: Closet
+        players: Players
+        profile: Profile
+zh-cn:
+    menu:
+        dashboard: 仪表盘
+        closet: 我的衣柜
+        players: 角色管理
+        profile: 个人资料
+</i18n>

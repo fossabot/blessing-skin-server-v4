@@ -2,8 +2,26 @@ export const user = [
     {
         name: 'index',
         text: 'dashboard',
-        icon: 'at',
-        link: ''
+        icon: 'speedometer',
+        link: '/user'
+    },
+    {
+        name: 'closet',
+        text: 'closet',
+        icon: 'tshirt',
+        link: '/user/closet'
+    },
+    {
+        name: 'players',
+        text: 'players',
+        icon: 'person-stalker',
+        link: '/user/players'
+    },
+    {
+        name: 'profile',
+        text: 'profile',
+        icon: 'person',
+        link: '/user/profile'
     }
 ];
 
