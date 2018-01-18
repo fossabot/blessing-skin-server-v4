@@ -12,7 +12,7 @@ const routes = [
     {
         path: '/user',
         meta: {
-            title: ''
+            title: 'dashboard'
         },
         component: load('user/dashboard')
     }

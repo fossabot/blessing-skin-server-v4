@@ -11,10 +11,9 @@
                     :collapsed-width="75"
                     :style="{ minHeight }">
                     <Menu
-                        active-name="1-2"
+                        :active-name="$route.path"
                         theme="dark"
                         width="auto"
-                        :open-names="['1']"
                         :class="menuItemsClasses"
                         @on-select="gotoLink">
                         <MenuItem
