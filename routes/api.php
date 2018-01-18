@@ -29,4 +29,5 @@ Route::group([
     'prefix' => 'site'
 ], function ($route) {
     $route->any('announcement', 'OptionsController@announcement');
+    $route->any('score', 'OptionsController@score');
 });
