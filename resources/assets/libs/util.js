@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import axios from 'axios';
 
 const util = Object.create(null);
@@ -13,5 +14,7 @@ util.ajax = axios.create({
     baseURL: ajaxUrl,
     timeout: 30000
 });
+
+Vue.prototype.$ajax = util.ajax;
 
 export default util;
