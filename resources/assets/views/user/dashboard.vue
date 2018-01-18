@@ -114,6 +114,11 @@ export default {
         scoreIntro() {
             return this.$t('score-intro.introduction', {
                 initial: this.scoreInfo.initial,
+                return: this.$t(
+                    `score-intro.${
+                        this.scoreInfo.returnScore ? 'will' : 'no'
+                    }-return`
+                ),
                 from: this.scoreInfo.signScore.split(',')[0],
                 to: this.scoreInfo.signScore.split(',')[1]
             });
@@ -205,14 +210,12 @@ export default {
         },
         signDiff(a, b) {
             const diff = moment.preciseDiff(a, b, true);
-            const args =
-                diff.hours !== 0
-                    ? {
-                          time: diff.days * 24 + diff.hours,
-                          unit: this.$t('hour')
-                      }
-                    : { time: diff.minutes, unit: this.$t('min') };
-            return args;
+            return diff.hours !== 0
+                ? {
+                      time: diff.days * 24 + diff.hours,
+                      unit: this.$t('hour')
+                  }
+                : { time: diff.minutes, unit: this.$t('min') };
         }
     },
     created() {
@@ -238,7 +241,7 @@ export default {
 }
 
 .score-num {
-    font-family: Minecraft;
+    font-family: Minecraft, serif;
     font-size: 50px;
     margin-top: 20px;
 }
@@ -272,12 +275,12 @@ en:
     score-intro:
         title: What is score?
         introduction: |
-            We use score system to prevent the behaviors like uplaoding huge amount of textures and registering players casually.
-            Both adding players and uplaoding textures will consume your score. :return-score
+            We use score system to prevent the behaviors like uploading huge amount of textures and registering players casually.
+            Both adding players and uploading textures will consume your score. {return}
 
-            The inital score of user on this site is {initial}, you can acquire {from} ~ {to} scores by signing in.
-        will-return-score: The score will be returned if you deleted them.
-        no-return-score: But the score will NOT be returned if you deleted them.
+            The initial score of user on this site is {initial}, you can acquire {from} ~ {to} scores by signing in.
+        will-return: The score will be returned if you deleted them.
+        no-return: But the score will NOT be returned if you deleted them.
     rates:
         title: Conversion
         storage: '{score} scores = 1 KB storage'
@@ -309,12 +312,12 @@ zh-cn:
             「贯彻爱与真实的。。呸！」上面只是卖下萌~
 
             为了不出现用户一个劲上传材质导致存储空间爆满，我们决定启用积分系统。
-            添加角色以及上传材质都会消耗积分，{return-score}。
+            添加角色以及上传材质都会消耗积分，{return}。
 
             本站用户初始积分为 {initial}，每日签到可以随机获得 {from} ~ {to} 积分
             添加皮肤库里的材质到衣柜不消耗积分。
-        will-return-score: 而删除已经添加的角色和已上传的材质时积分将会被返还
-        no-return-score: 但删除已经添加的角色和已上传的材质时积分不会被返还
+        will-return: 而删除已经添加的角色和已上传的材质时积分将会被返还
+        no-return: 但删除已经添加的角色和已上传的材质时积分不会被返还
     rates:
         title: 换算关系
         storage: '{score} 积分 = 1 KB 存储空间'
