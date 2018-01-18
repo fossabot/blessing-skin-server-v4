@@ -64,6 +64,10 @@ module.exports = {
                 })
             },
             {
+                test: /\.(gql|graphql)$/,
+                loader: 'graphql-tag/loader'
+            },
+            {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
                 loader: 'url-loader?limit=1024'
             },
