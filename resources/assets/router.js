@@ -1,6 +1,6 @@
 const routers = [
     {
-        path: '/',
+        path: '/user',
         meta: {
             title: ''
         },

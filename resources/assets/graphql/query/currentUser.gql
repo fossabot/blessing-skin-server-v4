@@ -1,0 +1,14 @@
+query {
+    currentUser {
+        score
+        last_signed_at
+        players {
+            pid
+        }
+        closet {
+            texture {
+                size
+            }
+        }
+    }
+}
