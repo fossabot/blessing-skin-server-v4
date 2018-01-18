@@ -95,8 +95,12 @@ return [
                 'players' => GraphQL\Queries\PlayerQuery::class,
                 'currentUser' => GraphQL\Queries\CurrentUserQuery::class,
             ],
-            'mutation' => [],
-            'middleware' => []
+            'mutation' => [
+                'userSign' => GraphQL\Mutations\UserSignMutation::class,
+            ],
+            'middleware' => [
+                \App\Http\Middleware\RefreshToken::class
+            ]
         ],
     ],
     
