@@ -1,6 +1,3 @@
 node_modules/
 public/assets/
-resources/assets/router.js
-resources/assets/libs/util.js
-resources/assets/vendors.js
 webpack.*.config.js

@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import iView from 'iview';
-import VueRouter from 'vue-router';
-import Routers from './router';
 import Vuex from 'vuex';
 import 'iview/dist/styles/iview.css';
 
@@ -14,10 +12,9 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import VueApollo from 'vue-apollo';
 
-import Util from './libs/util';
+import router from './libs/router';
 import App from './app.vue';
 
-Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueI18n);
 Vue.use(iView);
@@ -44,23 +41,6 @@ function lang() {
     }
 }
 
-const RouterConfig = {
-    mode: 'hash',
-    routes: Routers
-};
-const router = new VueRouter(RouterConfig);
-
-router.beforeEach((to, from, next) => {
-    iView.LoadingBar.start();
-    Util.title(to.meta.title);
-    next();
-});
-
-router.afterEach(() => {
-    iView.LoadingBar.finish();
-    window.scrollTo(0, 0);
-});
-
 const store = new Vuex.Store({
     state: {},
     getters: {},
@@ -83,7 +63,9 @@ const middlewareLink = new ApolloLink((operation, forward) => {
 });
 const afterwareLink = new ApolloLink((operation, forward) => {
     return forward(operation).map(response => {
-        const token = operation.getContext().response.headers.get('Authorization');
+        const token = operation
+            .getContext()
+            .response.headers.get('Authorization');
         if (token) {
             localStorage.setItem('token', token);
         }
