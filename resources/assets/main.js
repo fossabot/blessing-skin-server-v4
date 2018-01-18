@@ -2,8 +2,6 @@ import Vue from 'vue';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
-import VueI18n from 'vue-i18n';
-
 // GraphQL
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
@@ -13,37 +11,11 @@ import VueApollo from 'vue-apollo';
 
 import router from './libs/router';
 import store from './libs/store';
+import i18n from './libs/i18n';
 import App from './app.vue';
 
-Vue.use(VueI18n);
 Vue.use(iView);
 Vue.use(VueApollo);
-
-function lang() {
-    const preset = localStorage.getItem('language');
-    if (preset) return preset;
-
-    const fallback = 'zh-cn';
-    const supported = ['zh-cn', 'en'];
-    const convertRules = {
-        'zh-hans': 'zh-cn',
-        'en-us': 'en'
-    };
-
-    const nav = navigator.language.toLowerCase();
-    if (supported.includes(nav)) {
-        return nav;
-    } else if (supported.includes(convertRules[nav])) {
-        return convertRules[nav];
-    } else {
-        return fallback;
-    }
-}
-
-const i18n = new VueI18n({
-    locale: lang(),
-    fallbackLocale: 'zh-cn'
-});
 
 const middlewareLink = new ApolloLink((operation, forward) => {
     operation.setContext({
