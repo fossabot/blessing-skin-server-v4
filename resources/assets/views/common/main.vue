@@ -31,22 +31,7 @@
                         <breadcrumb-nav :currentPath="$store.state.ui.breadcrumb" />
                     </div>
                 </div>
-                <div ref="avatarCon" class="header-avator-con">                    
-                    <div class="user-dropdown-menu-con">
-                        <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
-                            <Dropdown transfer trigger="click" @on-click="logout">
-                                <a style="cursor: pointer;">
-                                    <span class="main-user-name">{{ userName }}</span>
-                                    <Icon type="arrow-down-b"></Icon>
-                                </a>
-                                <DropdownMenu slot="list">
-                                    <DropdownItem name="logout" v-t="`logout`" />
-                                </DropdownMenu>
-                            </Dropdown>
-                            <Avatar src="" class="avatar"></Avatar>
-                        </Row>
-                    </div>
-                </div>
+                <avatar-con :shrink="shrink" />
             </div>
         </div>
         <div
@@ -60,13 +45,15 @@
 </template>
 
 <script>
-import ShrinkableMenu from './components/shrinkable-menu/shrinkable-menu.vue';
+import ShrinkableMenu from './components/shrinkable-menu/shrinkable-menu';
 import BreadcrumbNav from './components/breadcrumb-nav';
+import AvatarCon from './avatar-con';
 
 export default {
     components: {
         ShrinkableMenu,
-        BreadcrumbNav
+        BreadcrumbNav,
+        AvatarCon
     },
     data() {
         return {
@@ -82,18 +69,6 @@ export default {
         },
         toggleSidebar() {
             this.shrink = !this.shrink;
-            if (window.outerWidth <= 768) {
-                if (this.shrink === false) {
-                    this.$refs.avatarCon.style.display = 'none';
-                } else {
-                    this.$refs.avatarCon.style.display = 'block';
-                }
-            } else {
-                this.$refs.avatarCon.style.display = 'block';
-            }
-        },
-        logout() {
-            //
         }
     },
     created() {
