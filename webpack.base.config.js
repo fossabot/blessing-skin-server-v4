@@ -64,6 +64,10 @@ module.exports = {
                 })
             },
             {
+                test: /\.ya?ml$/,
+                loader: 'json-loader!yaml-loader'
+            },
+            {
                 test: /\.(gql|graphql)$/,
                 loader: 'graphql-tag/loader'
             },

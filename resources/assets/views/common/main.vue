@@ -28,7 +28,7 @@
                 </div>
                 <div class="header-middle-con">
                     <div class="main-breadcrumb">
-                        <breadcrumb-nav :currentPath="$store.state.breadcrumb" />
+                        <breadcrumb-nav :currentPath="$store.state.ui.breadcrumb" />
                     </div>
                 </div>
                 <div ref="avatarCon" class="header-avator-con">                    

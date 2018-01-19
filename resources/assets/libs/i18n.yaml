@@ -1,0 +1,9 @@
+en:
+  logout: Log out
+  dashboard: Dashboard
+  user-center: User Center
+
+zh-cn:
+  logout: 退出登录
+  dashboard: 仪表盘
+  user-center: 用户中心

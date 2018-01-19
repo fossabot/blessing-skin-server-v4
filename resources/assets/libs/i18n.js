@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
+import generalText from './i18n.yaml';
 
 Vue.use(VueI18n);
 
@@ -26,5 +27,6 @@ function lang() {
 
 export default new VueI18n({
     locale: lang(),
-    fallbackLocale: 'zh-cn'
+    fallbackLocale: 'zh-cn',
+    messages: generalText
 });
