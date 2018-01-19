@@ -1,5 +1,5 @@
 <template>
-    <user-master>
+    <div>
         <Row :gutter="16">
             <Col :sm="24" :md="16" :lg="16">
                 <Card>
@@ -65,7 +65,7 @@
                 </Card>
             </Col>
         </Row>
-    </user-master>
+    </div>
 </template>
 
 <script>
@@ -73,12 +73,10 @@ import gql from 'graphql-tag';
 import moment from 'moment';
 import 'moment-precise-range-plugin';
 import VueMarkdown from 'vue-markdown';
-import UserMaster from './master';
 import CURRENT_USER from '../../graphql/query/currentUser.gql';
 
 export default {
     components: {
-        UserMaster,
         VueMarkdown
     },
     apollo: {

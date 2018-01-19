@@ -10,11 +10,17 @@ function load(path) {
 
 const routes = [
     {
-        path: '/user',
-        meta: {
-            title: 'dashboard'
-        },
-        component: load('user/dashboard')
+        path: '/',
+        component: load('common/main'),
+        children: [
+            {
+                path: 'user',
+                meta: {
+                    title: 'dashboard'
+                },
+                component: load('user/dashboard')
+            },
+        ]
     }
 ];
 

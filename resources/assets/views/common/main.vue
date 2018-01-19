@@ -52,7 +52,7 @@
         <div
             class="single-page-con"
             :style="{ left: shrink ? sidebarWidth() : '200px' }">
-            <div class="single-page">dd
+            <div class="single-page">
                 <router-view></router-view>
             </div>
         </div>
