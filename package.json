@@ -17,7 +17,7 @@
   "private": true,
   "scripts": {
     "init": "webpack --progress --config webpack.dev.config.js",
-    "dev": "webpack-dev-server --content-base ./ --inline --hot --compress --history-api-fallback --config webpack.dev.config.js",
+    "dev": "webpack-dev-server --content-base ./ --inline --hot --compress --history-api-fallback --host 0.0.0.0 --config webpack.dev.config.js",
     "build": "webpack --progress --hide-modules --config webpack.prod.config.js",
     "lint": "eslint --fix --format 'node_modules/eslint-friendly-formatter' --ext .js,.vue resources/assets"
   },
