@@ -67,6 +67,7 @@ export default {
     methods: {
         changeLang(lang) {
             this.$i18n.locale = lang;
+            document.title = this.$t(this.$route.meta.title);
             localStorage.setItem('language', lang);
         },
         logout() {

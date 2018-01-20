@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import iView from 'iview';
+import i18n from './i18n';
 
 Vue.use(VueRouter);
 
@@ -31,7 +32,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    document.title = to.meta.title + '';
+    document.title = i18n.t(to.meta.title) + '';
     next();
 });
 
