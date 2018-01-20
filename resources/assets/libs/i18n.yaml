@@ -2,8 +2,14 @@ en:
   logout: Log out
   dashboard: Dashboard
   user-center: User Center
+  players: Players
+  closet: Closet
+  profile: Profile
 
 zh-cn:
   logout: 退出登录
   dashboard: 仪表盘
   user-center: 用户中心
+  players: 角色管理
+  closet: 我的衣柜
+  profile: 个人资料

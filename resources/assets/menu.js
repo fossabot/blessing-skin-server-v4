@@ -1,27 +1,23 @@
 export const user = [
     {
-        name: 'dashboard',
+        name: '/user',
         text: 'dashboard',
-        icon: 'speedometer',
-        link: '/user'
+        icon: 'speedometer'
     },
     {
-        name: 'closet',
+        name: '/user/closet',
         text: 'closet',
-        icon: 'tshirt',
-        link: '/user/closet'
+        icon: 'tshirt'
     },
     {
-        name: 'players',
+        name: '/user/players',
         text: 'players',
-        icon: 'person-stalker',
-        link: '/user/players'
+        icon: 'person-stalker'
     },
     {
-        name: 'profile',
+        name: '/user/profile',
         text: 'profile',
-        icon: 'person',
-        link: '/user/profile'
+        icon: 'person'
     }
 ];
 

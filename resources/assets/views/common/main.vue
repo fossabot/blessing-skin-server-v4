@@ -48,6 +48,7 @@
 import ShrinkableMenu from './components/shrinkable-menu/shrinkable-menu';
 import BreadcrumbNav from './components/breadcrumb-nav';
 import AvatarCon from './avatar-con';
+import { user as userMenu } from './../../menu';
 
 export default {
     components: {
@@ -60,7 +61,7 @@ export default {
             shrink: false,
             userName: '',
             menuTheme: 'dark',
-            menuList: []
+            menuList: userMenu
         };
     },
     methods: {
