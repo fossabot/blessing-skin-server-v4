@@ -29,7 +29,7 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(User::class, 'admin', function (Faker $faker) {
+$factory->state(User::class, 'admin', function (Faker $faker) {
     return [
         'nickname' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -44,7 +44,7 @@ $factory->define(User::class, 'admin', function (Faker $faker) {
     ];
 });
 
-$factory->define(User::class, 'superAdmin', function (Faker $faker) {
+$factory->state(User::class, 'superAdmin', function (Faker $faker) {
     return [
         'nickname' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -59,7 +59,7 @@ $factory->define(User::class, 'superAdmin', function (Faker $faker) {
     ];
 });
 
-$factory->define(User::class, 'banned', function (Faker $faker) {
+$factory->state(User::class, 'banned', function (Faker $faker) {
     return [
         'nickname' => $faker->name,
         'email' => $faker->unique()->safeEmail,
