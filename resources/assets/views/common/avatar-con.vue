@@ -70,8 +70,14 @@ export default {
             document.title = this.$t(this.$route.meta.title);
             localStorage.setItem('language', lang);
         },
-        logout() {
-            //
+        async logout() {
+            try {
+                await this.$ajax.post('/api/auth/logout');
+                this.$Message.success(this.$t('logout.success'));
+                this.$router.push('/');
+            } catch (error) {
+                this.$Message.error(this.$t('logout.failed'));
+            }
         }
     },
     watch: {
@@ -89,3 +95,15 @@ export default {
     }
 };
 </script>
+
+<i18n>
+en:
+    logout:
+        success: Logged out successfully.
+        failed: Failed to log out.
+
+zh-cn:
+    logout:
+        success: 登出成功
+        failed: 登出失败
+</i18n>
