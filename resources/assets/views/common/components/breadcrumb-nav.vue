@@ -1,7 +1,10 @@
 <template>
     <Breadcrumb>
+        <BreadcrumbItem href="/">
+            {{ currentPath[0].title }}
+        </BreadcrumbItem>
         <BreadcrumbItem 
-            v-for="item in currentPath" 
+            v-for="item in currentPath.slice(1)" 
             :href="item.path" 
             :key="item.path"
         >{{ $t(item.title) }}</BreadcrumbItem>
