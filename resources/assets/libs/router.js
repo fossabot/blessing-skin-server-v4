@@ -21,6 +21,13 @@ const routes = [
                 },
                 component: load('user/dashboard')
             },
+            {
+                path: 'user/profile',
+                meta: {
+                    title: 'profile'
+                },
+                component: load('user/profile')
+            }
         ]
     }
 ];

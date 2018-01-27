@@ -13,6 +13,11 @@ class User extends Authenticatable implements JWTSubject
     const CREATED_AT = 'registered_at';
     const UPDATED_AT = null;
 
+    const BANNED = -1;
+    const NORMAL = 0;
+    const ADMIN = 1;
+    const SUPER_ADMIN = 2;
+
     protected $primaryKey = 'uid';
 
     protected $fillable = [

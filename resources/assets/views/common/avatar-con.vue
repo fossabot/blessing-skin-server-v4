@@ -17,11 +17,11 @@
                 </Dropdown>
                 <Dropdown transfer trigger="click" @on-click="logout">
                     <a style="cursor: pointer;">
-                        <span class="main-user-name">{{ currentUser.nickname }}</span>
+                        <span class="main-user-name">{{ $store.state.user.nickname }}</span>
                         <Icon type="arrow-down-b"></Icon>
                     </a>
                     <DropdownMenu slot="list">
-                        <DropdownItem name="logout" v-t="`logout`" />
+                        <DropdownItem name="logout" v-t="`logout.action`" />
                     </DropdownMenu>
                 </Dropdown>
                 <Avatar src="" class="avatar"></Avatar>
@@ -31,21 +31,8 @@
 </template>
 
 <script>
-import gql from 'graphql-tag';
-
 export default {
     name: 'AvatarCon',
-    apollo: {
-        currentUser: {
-            query: gql`
-                query {
-                    currentUser {
-                        nickname
-                    }
-                }
-            `
-        }
-    },
     props: {
         shrink: Boolean
     },
@@ -54,8 +41,7 @@ export default {
             langs: [
                 { text: '简体中文', value: 'zh-cn' },
                 { text: 'English', value: 'en' }
-            ],
-            currentUser: { nickname: '' }
+            ]
         };
     },
     computed: {
@@ -80,6 +66,9 @@ export default {
             }
         }
     },
+    created() {
+        this.$store.dispatch('fetchUserInfo');
+    },
     watch: {
         shrink(newValue) {
             if (window.outerWidth <= 768) {
@@ -99,11 +88,13 @@ export default {
 <i18n>
 en:
     logout:
+        action: Log out
         success: Logged out successfully.
         failed: Failed to log out.
 
 zh-cn:
     logout:
+        action: 退出登录
         success: 登出成功
         failed: 登出失败
 </i18n>

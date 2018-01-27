@@ -97,6 +97,10 @@ return [
             ],
             'mutation' => [
                 'userSign' => GraphQL\Mutations\UserSignMutation::class,
+                'updateUserProfile' =>
+                    GraphQL\Mutations\UpdateUserProfileMutation::class,
+                'deleteAccount' =>
+                    GraphQL\Mutations\DeleteAccountMutation::class,
             ],
             'middleware' => [
                 \App\Http\Middleware\RefreshToken::class

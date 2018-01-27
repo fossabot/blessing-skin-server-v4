@@ -1,7 +1,7 @@
 <template>
     <Menu
         ref="sideMenu"
-        :active-name="$route.name"
+        :active-name="$route.path"
         :theme="menuTheme"
         width="auto"
         @on-select="gotoLink">

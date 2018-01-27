@@ -35,7 +35,7 @@ const httpLink = new HttpLink({
         '/graphql'
 });
 
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
     link: middlewareLink.concat(afterwareLink).concat(httpLink),
     cache: new InMemoryCache()
 });
