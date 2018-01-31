@@ -13,7 +13,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(vue|js|ts)$/,
+                test: /\.(vue|ts)$/,
                 enforce: 'pre',
                 loader: 'eslint-loader',
                 options: {
@@ -54,12 +54,6 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'ts-loader',
                 options: { appendTsSuffixTo: [/\.vue$/] }
-            },
-            {
-                test: /\.js$/,
-                use: 'babel-loader',
-                exclude: path.resolve(__dirname, 'node_modules'),
-                include: path.resolve(__dirname, 'resources', 'assets')
             },
             {
                 test: /\.css$/,
