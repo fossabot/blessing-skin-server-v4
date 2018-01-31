@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import i18n from '../../libs/i18n';
 
 export default Vue.extend({
     name: 'AvatarCon',
@@ -56,7 +57,7 @@ export default Vue.extend({
     },
     methods: {
         changeLang(lang: string) {
-            this.$i18n.locale = lang;
+            i18n.locale = lang;
             document.title = this.$t(this.$route.meta.title).toString();
             localStorage.setItem('language', lang);
         },

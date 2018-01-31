@@ -28,5 +28,6 @@ function lang(): string {
 export default new VueI18n({
     locale: lang(),
     fallbackLocale: 'zh-cn',
-    messages: generalText
+    messages: generalText,
+    silentTranslationWarn: true
 });
