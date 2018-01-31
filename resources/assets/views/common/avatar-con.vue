@@ -30,8 +30,10 @@
     </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
     name: 'AvatarCon',
     props: {
         shrink: Boolean
@@ -45,15 +47,17 @@ export default {
         };
     },
     computed: {
-        currentLangName() {
-            return this.langs.find(lang => lang.value === this.$i18n.locale)
-                .text;
+        currentLangName(): string {
+            const lang = this.langs.find(
+                lang => lang.value === this.$i18n.locale
+            );
+            return lang ? lang.text : 'zh-cn';
         }
     },
     methods: {
-        changeLang(lang) {
+        changeLang(lang: string) {
             this.$i18n.locale = lang;
-            document.title = this.$t(this.$route.meta.title);
+            document.title = this.$t(this.$route.meta.title).toString();
             localStorage.setItem('language', lang);
         },
         async logout() {
@@ -70,19 +74,21 @@ export default {
         this.$store.dispatch('fetchUserInfo');
     },
     watch: {
-        shrink(newValue) {
+        shrink(newValue: boolean) {
             if (window.outerWidth <= 768) {
                 if (newValue === false) {
-                    this.$refs.avatarCon.style.display = 'none';
+                    (this.$refs.avatarCon as HTMLElement).style.display =
+                        'none';
                 } else {
-                    this.$refs.avatarCon.style.display = 'block';
+                    (this.$refs.avatarCon as HTMLElement).style.display =
+                        'block';
                 }
             } else {
-                this.$refs.avatarCon.style.display = 'block';
+                (this.$refs.avatarCon as HTMLElement).style.display = 'block';
             }
         }
     }
-};
+});
 </script>
 
 <i18n>

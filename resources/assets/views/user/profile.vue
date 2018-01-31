@@ -158,12 +158,27 @@
     </Row>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+import VueI18n from 'vue-i18n';
 import gql from 'graphql-tag';
 import zxcvbn from 'zxcvbn';
+import { State } from '../../libs/store';
 
-export default {
-    data() {
+type FormState = 'normal' | 'pending' | 'success' | 'error';
+type PasswordFormState = FormState | 'wrong-password';
+type FormData = {
+    readonly rules: { readonly [key: string]: Array<Object> };
+    data: { [key: string]: string };
+};
+
+export default Vue.extend({
+    data(): {
+        password: FormData & { state: PasswordFormState };
+        nickname: FormData & { state: FormState };
+        email: FormData & { state: PasswordFormState; autoComplete: string[] };
+        deleteConfirm: FormData & { modal: boolean };
+    } {
         return {
             password: {
                 rules: {
@@ -195,11 +210,22 @@ export default {
                             message: this.$t('password.empty-confirm')
                         },
                         {
-                            validator: (rule, value, callback) => {
+                            validator: (
+                                rule: any,
+                                value: string,
+                                callback: (result?: Error) => Promise<boolean>
+                            ): Promise<boolean> => {
+                                // Reason: When initializing component's `data`,
+                                // we could not get other `data` property.
+                                // However in runtime, this function just will be
+                                // ran after component has been initialized.
+                                // @ts-ignore
                                 if (value !== this.password.data.new) {
-                                    callback(
+                                    return callback(
                                         new Error(
-                                            this.$t('password.invalid-confirm')
+                                            this.$t(
+                                                'password.invalid-confirm'
+                                            ).toString()
                                         )
                                     );
                                 } else {
@@ -240,17 +266,25 @@ export default {
                             message: this.$t('email.invalid-email')
                         },
                         {
-                            validator: async (rule, value, callback) => {
-                                if (value === this.$store.state.user.email) {
+                            validator: async (
+                                rule: any,
+                                value: string,
+                                callback: Function
+                            ) => {
+                                if (value === (this.$store.state as State).user.email) {
                                     return callback(
                                         new Error(
-                                            this.$t('email.same-with-now')
+                                            this.$t(
+                                                'email.same-with-now'
+                                            ).toString()
                                         )
                                     );
                                 }
 
                                 const {
                                     data: { users }
+                                }: {
+                                    data: { users: User[] };
                                 } = await this.$apollo.query({
                                     query: gql`
                                         query {
@@ -264,7 +298,9 @@ export default {
                                     return callback();
                                 } else {
                                     callback(
-                                        new Error(this.$t('email.existed'))
+                                        new Error(
+                                            this.$t('email.existed').toString()
+                                        )
                                     );
                                 }
                             },
@@ -312,11 +348,15 @@ export default {
         };
     },
     methods: {
-        validate(entry) {
+        validate(entry: string): Promise<boolean> {
+            // We ingore TS error below
+            // because `validate` method is not existed on standard Vue `ref` object
+            // @ts-ignore
             return this.$refs[entry].validate(this[entry].rules);
         },
-        completeEmail(value) {
+        completeEmail(value: string): void {
             if (!value) {
+                this.password;
                 this.email.autoComplete = [];
                 return;
             }
@@ -350,14 +390,14 @@ export default {
                 domain => `${value}@${domain}`
             );
         },
-        showDeleteConfirm() {
+        showDeleteConfirm(): void {
             this.deleteConfirm.modal = true;
         },
-        cancelDelete() {
+        cancelDelete(): void {
             this.deleteConfirm.modal = false;
             this.deleteConfirm.data.password = '';
         },
-        async deleteAccount() {
+        async deleteAccount(): Promise<void> {
             const password = this.deleteConfirm.data.password;
             if (password.length < 6 || password.length > 16) {
                 return;
@@ -382,11 +422,11 @@ export default {
                     this.$Message.success(this.$t('delete.success'));
                     setTimeout(() => this.$router.push('/'), 3000);
                 }
-            } catch (error) {
+            } catch {
                 this.$Message.error(this.$t('error'));
             }
         },
-        async updatePassword() {
+        async updatePassword(): Promise<void> {
             this.password.state = 'pending';
             if (!await this.validate('password')) {
                 this.password.state = 'normal';
@@ -419,7 +459,7 @@ export default {
                 }
             }
         },
-        async updateNickname() {
+        async updateNickname(): Promise<void> {
             this.nickname.state = 'pending';
             if (!await this.validate('nickname')) {
                 this.nickname.state = 'normal';
@@ -443,11 +483,11 @@ export default {
                 this.nickname.state = 'success';
                 this.$store.commit('updateUserInfo', { nickname });
                 setTimeout(() => (this.nickname.state = 'normal'), 3000);
-            } catch (error) {
+            } catch {
                 this.nickname.state = 'error';
             }
         },
-        async updateEmail() {
+        async updateEmail(): Promise<void> {
             this.email.state = 'pending';
             if (!await this.validate('email')) {
                 this.email.state = 'normal';
@@ -484,13 +524,13 @@ export default {
         }
     },
     computed: {
-        passwordStrength() {
+        passwordStrength(): VueI18n.TranslateResult {
             return this.$t(
                 `password.strength[${zxcvbn(this.password.data.new).score}]`
             );
         }
     }
-};
+});
 </script>
 
 <style lang="less" scoped>

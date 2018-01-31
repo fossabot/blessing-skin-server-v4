@@ -49,7 +49,7 @@ const store = new Vuex.Store({
             localStorage.setItem('token', token);
         },
         async fetchUserInfo({ commit }) {
-            const { data: { currentUser: user } } = await apolloClient.query({
+            const { data } = await apolloClient.query({
                 query: gql`
                     query {
                         currentUser {
@@ -61,9 +61,11 @@ const store = new Vuex.Store({
                     }
                 `
             });
-            commit('updateUserInfo', user);
+            commit('updateUserInfo', (data as { currentUser: User }).currentUser);
         }
     }
 });
+
+export type State = typeof store.state;
 
 export default store;

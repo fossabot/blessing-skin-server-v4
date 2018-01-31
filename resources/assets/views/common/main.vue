@@ -44,13 +44,14 @@
     </div>
 </template>
 
-<script>
-import ShrinkableMenu from './components/shrinkable-menu/shrinkable-menu';
-import BreadcrumbNav from './components/breadcrumb-nav';
-import AvatarCon from './avatar-con';
+<script lang="ts">
+import Vue from 'vue';
+import ShrinkableMenu from './components/shrinkable-menu/shrinkable-menu.vue';
+import BreadcrumbNav from './components/breadcrumb-nav.vue';
+import AvatarCon from './avatar-con.vue';
 import { user as userMenu } from './../../menu';
 
-export default {
+export default Vue.extend({
     components: {
         ShrinkableMenu,
         BreadcrumbNav,
@@ -77,7 +78,7 @@ export default {
             this.shrink = true;
         }
     }
-};
+});
 </script>
 
 <!-- DO NOT use scoped style -->

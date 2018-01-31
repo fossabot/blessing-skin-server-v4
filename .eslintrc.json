@@ -1,7 +1,7 @@
 {
     "extends": ["eslint:recommended", "plugin:vue/essential"],
     "parserOptions": {
-        "parser": "babel-eslint",
+        "parser": "typescript-eslint-parser",
         "sourceType": "module",
         "ecmaVersion": 2017
     },
@@ -13,13 +13,15 @@
         "jest": true
     },
     "plugins": [
-        "vue"
+        "vue",
+        "typescript"
     ],
     "rules": {
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "object-curly-spacing": ["error", "always"],
+        "no-undef": "off",
         "no-unused-vars": "warn",
         "no-console": "off",
         "comma-style": ["warn", "last"],
@@ -27,13 +29,17 @@
         "no-var": "error",
         "eqeqeq": "error",
         "vue/no-parsing-error": ["error", {
-          "x-invalid-end-tag": false
+            "x-invalid-end-tag": false
         }],
         "vue/html-end-tags": "error",
         "vue/mustache-interpolation-spacing": "error",
         "vue/no-multi-spaces": "error",
         "vue/v-bind-style": "error",
         "vue/v-on-style": "error",
-        "vue/html-quotes": "error"
+        "vue/html-quotes": "error",
+        "typescript/no-unused-vars": "warn",
+        "typescript/no-angle-bracket-type-assertion": "error",
+        "typescript/no-triple-slash-reference": "error",
+        "typescript/type-annotation-spacing": "error"
     }
 }

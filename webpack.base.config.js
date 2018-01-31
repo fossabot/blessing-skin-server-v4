@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: './resources/assets/main'
+        main: './resources/assets/main.ts'
     },
     output: {
         path: path.join(__dirname, './public/assets')
@@ -13,7 +13,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(vue|js)$/,
+                test: /\.(vue|js|ts)$/,
                 enforce: 'pre',
                 loader: 'eslint-loader',
                 options: {
@@ -51,8 +51,13 @@ module.exports = {
                 ]
             },
             {
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                options: { appendTsSuffixTo: [/\.vue$/] }
+            },
+            {
                 test: /\.js$/,
-                use: 'happypack/loader?id=babel',
+                use: 'babel-loader',
                 exclude: path.resolve(__dirname, 'node_modules'),
                 include: path.resolve(__dirname, 'resources', 'assets')
             },
@@ -82,17 +87,13 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.vue'],
+        extensions: ['.js', '.vue', '.ts'],
         modules: [path.resolve(__dirname, 'node_modules')],
         alias: {
             vue: 'vue/dist/vue.esm.js'
         }
     },
     plugins: [
-        new HappyPack({
-            id: 'babel',
-            loaders: ['babel-loader']
-        }),
         new HappyPack({
             id: 'css',
             loaders: ['css-loader?minimize', 'autoprefixer-loader']

@@ -68,14 +68,16 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import 'moment-precise-range-plugin';
 import VueMarkdown from 'vue-markdown';
+import VueI18n from 'vue-i18n';
 import CURRENT_USER from '../../graphql/query/currentUser.gql';
 
-export default {
+export default Vue.extend({
     components: {
         VueMarkdown
     },
@@ -87,29 +89,28 @@ export default {
         }
     },
     computed: {
-        usedStorage() {
-            return this.currentUser.closet.reduce(
-                (item, carry) => item.texture.size + carry,
-                0
-            );
+        usedStorage(): number {
+            return this.currentUser.closet
+                .map((item: { texture: { size: number } }) => item.texture.size)
+                .reduce((size, carry) => size + carry);
         },
-        storagePercent() {
+        storagePercent(): number {
             if (this.usedStorage === 0) {
                 return 0;
             }
             return this.usedStorage / this.currentUser.score;
         },
-        totalPlayers() {
+        totalPlayers(): number {
             return ~~(this.currentUser.score / 100);
         },
-        playersPercent() {
+        playersPercent(): number {
             const count = this.currentUser.players.length;
             if (count === 0) {
                 return 0;
             }
             return count / this.totalPlayers;
         },
-        scoreIntro() {
+        scoreIntro(): VueI18n.TranslateResult {
             return this.$t('score-intro.introduction', {
                 initial: this.scoreInfo.initial,
                 return: this.$t(
@@ -121,7 +122,7 @@ export default {
                 to: this.scoreInfo.signScore.split(',')[1]
             });
         },
-        canSign() {
+        canSign(): boolean {
             const last = moment(this.currentUser.last_signed_at);
             if (this.scoreInfo.signAfterZero) {
                 last.startOf('date');
@@ -132,7 +133,7 @@ export default {
                 return moment().isAfter(last);
             }
         },
-        signButtonText() {
+        signButtonText(): VueI18n.TranslateResult {
             if (this.canSign) {
                 return this.$t('sign');
             } else if (this.scoreInfo.signAfterZero) {
@@ -155,14 +156,32 @@ export default {
             }
         }
     },
-    data() {
+    data(): {
+        announcement: string,
+        readonly currentUser: {
+            readonly score: number,
+            readonly players: any[],
+            readonly closet: any[],
+            readonly last_signed_at: string
+        },
+        scoreInfo: {
+            signAfterZero: boolean,
+            signGapTime: number,
+            perPlayer: number,
+            perStorage: number,
+            returnScore: boolean,
+            initial: number,
+            signScore: string
+        }
+    } {
         return {
             announcement: '',
             // Just initialize apollo data
             currentUser: {
                 score: 0,
                 players: [],
-                closet: []
+                closet: [],
+                last_signed_at: ''
             },
             scoreInfo: {
                 signAfterZero: false,
@@ -176,7 +195,7 @@ export default {
         };
     },
     methods: {
-        async sign() {
+        async sign(): Promise<void> {
             const previous = this.currentUser.score;
             try {
                 const {
@@ -191,8 +210,10 @@ export default {
                         }
                     `,
                     update(store, { data: { userSign } }) {
-                        const data = store.readQuery({ query: CURRENT_USER });
-                        Object.assign(data.currentUser, userSign);
+                        const data: {
+                            currentUser: Object;
+                        } | null = store.readQuery({ query: CURRENT_USER });
+                        Object.assign(data ? data.currentUser : {}, userSign);
                         return store.writeQuery({
                             query: CURRENT_USER,
                             data
@@ -202,12 +223,15 @@ export default {
                 this.$Message.success(
                     this.$t('sign-success', { score: score - previous })
                 );
-            } catch (e) {
+            } catch {
                 this.$Message.error(this.$t('sign-failed'));
             }
         },
-        signDiff(a, b) {
-            const diff = moment.preciseDiff(a, b, true);
+        signDiff(
+            d1: moment.Moment,
+            d2: moment.Moment
+        ): { time: number; unit: VueI18n.TranslateResult } {
+            const diff = moment.preciseDiff(d1, d2, true);
             return diff.hours !== 0
                 ? {
                       time: diff.days * 24 + diff.hours,
@@ -216,7 +240,7 @@ export default {
                 : { time: diff.minutes, unit: this.$t('min') };
         }
     },
-    created() {
+    created(): void {
         this.$ajax.get('/api/site/announcement').then(({ data }) => {
             this.announcement = data;
         });
@@ -224,7 +248,7 @@ export default {
             this.scoreInfo = data;
         });
     }
-};
+});
 </script>
 
 <style lang="less" scoped>

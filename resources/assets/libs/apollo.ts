@@ -14,19 +14,21 @@ const middlewareLink = new ApolloLink((operation, forward) => {
             Authorization: store.state.token
         }
     });
-    return forward(operation);
+    return forward ? forward(operation) : null;
 });
 
 const afterwareLink = new ApolloLink((operation, forward) => {
-    return forward(operation).map(response => {
-        const token = operation
-            .getContext()
-            .response.headers.get('Authorization');
-        if (token) {
-            store.dispatch('refreshToken', { token });
-        }
-        return response;
-    });
+    return forward
+        ? forward(operation).map(response => {
+              const token = operation
+                  .getContext()
+                  .response.headers.get('Authorization');
+              if (token) {
+                  store.dispatch('refreshToken', { token });
+              }
+              return response;
+          })
+        : null;
 });
 
 const httpLink = new HttpLink({

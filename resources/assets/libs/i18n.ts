@@ -4,13 +4,13 @@ import generalText from './i18n.yaml';
 
 Vue.use(VueI18n);
 
-function lang() {
+function lang(): string {
     const preset = localStorage.getItem('language');
     if (preset) return preset;
 
     const fallback = 'zh-cn';
     const supported = ['zh-cn', 'en'];
-    const convertRules = {
+    const convertRules: { [key: string]: string } = {
         'zh-hans': 'zh-cn',
         'en-us': 'en'
     };

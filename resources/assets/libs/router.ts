@@ -5,7 +5,7 @@ import i18n from './i18n';
 
 Vue.use(VueRouter);
 
-function load(path) {
+function load(path: string) {
     return () => import(`../views/${path}.vue`);
 }
 

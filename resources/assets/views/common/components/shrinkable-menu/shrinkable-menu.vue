@@ -15,11 +15,12 @@
     </div>
 </template>
 
-<script>
-import SidebarMenu from './components/sidebarMenu';
-import SidebarMenuShrink from './components/sidebarMenuShrink';
+<script lang="ts">
+import Vue from 'vue';
+import SidebarMenu from './components/sidebarMenu.vue';
+import SidebarMenuShrink from './components/sidebarMenuShrink.vue';
 
-export default {
+export default Vue.extend({
     name: 'ShrinkableMenu',
     components: {
         SidebarMenu,
@@ -37,7 +38,7 @@ export default {
         theme: {
             type: String,
             default: 'dark',
-            validator(val) {
+            validator(val: string) {
                 return ['dark', 'light'].includes(val);
             }
         },
@@ -46,10 +47,10 @@ export default {
         }
     },
     computed: {
-        bgColor() {
+        bgColor(): string {
             return this.theme === 'dark' ? '#495060' : '#fff';
         },
-        shrinkIconColor() {
+        shrinkIconColor(): string {
             return this.theme === 'dark' ? '#fff' : '#495060';
         },
         styles() {
@@ -60,23 +61,23 @@ export default {
     },
     mounted() {
         if (window.outerWidth <= 768) {
-            this.$refs.menu.style.display = 'none';
+            (this.$refs.menu as HTMLElement).style.display = 'none';
         }
     },
     watch: {
         shrink(newValue) {
             if (window.outerWidth <= 768) {
                 if (newValue) {
-                    this.$refs.menu.style.display = 'none';
+                    (this.$refs.menu as HTMLElement).style.display = 'none';
                 } else {
-                    this.$refs.menu.style.display = 'block';
+                    (this.$refs.menu as HTMLElement).style.display = 'block';
                 }
             } else {
-                this.$refs.menu.style.display = 'block';
+                (this.$refs.menu as HTMLElement).style.display = 'block';
             }
         }
     }
-};
+});
 </script>
 
 <style lang="less" scoped>

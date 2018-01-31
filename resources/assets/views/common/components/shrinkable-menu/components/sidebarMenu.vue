@@ -38,8 +38,10 @@
     </Menu>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
     name: 'SidebarMenu',
     props: {
         menuList: Array,
@@ -53,18 +55,19 @@ export default {
         }
     },
     methods: {
-        gotoLink(link) {
+        gotoLink(link: string): void {
             this.$router.push(link);
         }
     },
     updated() {
         this.$nextTick(() => {
             if (this.$refs.sideMenu) {
-                this.$refs.sideMenu.updateOpened();
+                const sideMenu = (this.$refs.sideMenu as Vue & { updateOpened: Function });
+                sideMenu.updateOpened();
             }
         });
     }
-};
+});
 </script>
 
 <style lang="less" scoped>

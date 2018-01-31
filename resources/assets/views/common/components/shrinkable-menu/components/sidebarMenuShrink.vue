@@ -48,8 +48,10 @@
     </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
     name: 'SidebarMenuShrink',
     props: {
         menuList: {
@@ -65,11 +67,11 @@ export default {
         }
     },
     methods: {
-        gotoLink(link) {
+        gotoLink(link: string): void {
             this.$router.push(link);
         }
     }
-};
+});
 </script>
 
 <style lang="less" scoped>
