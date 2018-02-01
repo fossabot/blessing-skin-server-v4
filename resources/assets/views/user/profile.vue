@@ -357,14 +357,15 @@ export default Vue.extend({
                     data: { deleteAccount: user }
                 } = await this.$apollo.mutate({
                     mutation: gql`
-                        mutation {
-                            deleteAccount(password: "${
-                                this.deleteConfirm.data.password
-                            }") {
+                        mutation($password: String) {
+                            deleteAccount(password: $password) {
                                 uid
                             }
                         }
-                    `
+                    `,
+                    variables: {
+                        password: this.deleteConfirm.data.password
+                    }
                 });
 
                 if (user) {
@@ -387,14 +388,19 @@ export default Vue.extend({
             try {
                 await this.$apollo.mutate({
                     mutation: gql`
-                        mutation {
+                        mutation($old: String, $new: String) {
                             updateUserProfile(
-                                old_password: "${this.password.data.old}",
-                                new_password: "${this.password.data.new}"
-                            )
-                            { uid }
+                                old_password: $old
+                                new_password: $new
+                            ) {
+                                uid
+                            }
                         }
-                    `
+                    `,
+                    variables: {
+                        old: this.password.data.old,
+                        new: this.password.data.new
+                    }
                 });
                 this.password.state = 'success';
                 setTimeout(() => (this.password.state = 'normal'), 3000);
@@ -422,14 +428,15 @@ export default Vue.extend({
                     data: { updateUserProfile: { nickname } }
                 } = await this.$apollo.mutate({
                     mutation: gql`
-                        mutation {
-                            updateUserProfile(nickname: "${
-                                this.nickname.data.nickname
-                            }") {
+                        mutation($nickname: String) {
+                            updateUserProfile(nickname: $nickname) {
                                 nickname
                             }
                         }
-                    `
+                    `,
+                    variables: {
+                        nickname: this.nickname.data.nickname
+                    }
                 });
                 this.nickname.state = 'success';
                 this.$store.commit('updateUserInfo', { nickname });
@@ -450,13 +457,19 @@ export default Vue.extend({
                     data: { updateUserProfile: { email } }
                 } = await this.$apollo.mutate({
                     mutation: gql`
-                        mutation {
+                        mutation($email: String, $password: String) {
                             updateUserProfile(
-                                email: "${this.email.data.email}",
-                                current_password: "${this.email.data.password}"
-                            ) { email }
+                                email: $email
+                                current_password: $password
+                            ) {
+                                email
+                            }
                         }
-                    `
+                    `,
+                    variables: {
+                        email: this.email.data.email,
+                        password: this.email.data.password
+                    }
                 });
                 this.email.state = 'success';
                 this.$store.commit('updateUserInfo', { email });

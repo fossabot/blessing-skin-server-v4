@@ -7,8 +7,8 @@ VeeValidate.Validator.extend('unique-email', {
     validate: async value => {
         const { data } = await apolloClient.query({
             query: gql`
-                query {
-                    users(email: "${value}") {
+                query($email: String) {
+                    users(email: $email) {
                         uid
                     }
                 }
