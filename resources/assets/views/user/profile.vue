@@ -3,21 +3,48 @@
         <Col :xs="24" :lg="12">
             <Card>
                 <p slot="title" v-t="`password.title`"></p>
-                <Form ref="password" :model="password.data" :rules="password.rules">
-                    <FormItem prop="old" :label="$t('password.old')">
-                        <Input v-model="password.data.old" type="password" />
+                <Form>
+                    <FormItem
+                        :label="$t('password.old')"
+                        :error="errors.first('old-password')"
+                        :validateStatus="hasValidateError('old-password')"
+                    >
+                        <Input
+                            v-validate="`required|min:6|max:16`"
+                            name="old-password"
+                            ref="old-password"
+                            v-model="password.data.old"
+                            type="password"
+                        />
                     </FormItem>
-                    <FormItem prop="new" :label="$t('password.new')">
+                    <FormItem
+                        :label="$t('password.new')"
+                        :error="errors.first('new-password')"
+                        :validateStatus="hasValidateError('new-password')"
+                    >
                         <span>{{ passwordStrength }}</span>
                         <Input
+                            v-validate="`required|min:8|max:16`"
+                            name="new-password"
+                            ref="new-password"
                             :placeholder="$t('password.placeholder')"
                             v-model="password.data.new"
                             type="password"
                             @input="password.data.confirm = ''"
                         />
                     </FormItem>
-                    <FormItem prop="confirm" :label="$t('password.confirm')">
-                        <Input v-model="password.data.confirm" type="password" />
+                    <FormItem
+                        :label="$t('password.confirm')"
+                        :error="errors.first('confirm-password')"
+                        :validateStatus="hasValidateError('confirm-password')"
+                    >
+                        <Input
+                            v-validate="`required|confirmed:new-password`"
+                            name="confirm-password"
+                            ref="confirm-password"
+                            v-model="password.data.confirm"
+                            type="password"
+                        />
                     </FormItem>
                     <FormItem>
                         <Button
@@ -50,9 +77,16 @@
         <Col :xs="24" :lg="12">
             <Card>
                 <p slot="title" v-t="`nickname.title`"></p>
-                <Form ref="nickname" :model="nickname.data" :rules="nickname.rules">
-                    <FormItem prop="nickname">
+                <Form>
+                    <FormItem
+                        prop="nickname"
+                        :error="errors.first('nickname')"
+                        :validateStatus="hasValidateError('nickname')"
+                    >
                         <Input
+                            v-validate="`required|max:16`"
+                            name="nickname"
+                            ref="nickname"
                             v-model="nickname.data.nickname"
                             :placeholder="$t('nickname.rule')"
                         >
@@ -86,16 +120,33 @@
 
             <Card>
                 <p slot="title" v-t="`email.title`"></p>
-                <Form ref="email" :model="email.data" :rules="email.rules">
-                    <FormItem :label="$t('email.new')" prop="email">
+                <Form>
+                    <FormItem
+                        :label="$t('email.new')"
+                        :error="errors.first('email')"
+                        :validateStatus="hasValidateError('email')"
+                    >
                         <AutoComplete
+                            v-validate="`required|email|unique-email`"
+                            name="email"
+                            ref="email"
                             v-model="email.data.email"
                             :data="email.autoComplete"
                             @on-search="completeEmail"
                         />
                     </FormItem>
-                    <FormItem :label="$t('email.password')" prop="password">
-                        <Input type="password" v-model="email.data.password" />
+                    <FormItem
+                        :label="$t('email.password')"
+                        :error="errors.first('email-password')"
+                        :validateStatus="hasValidateError('email-password')"
+                    >
+                        <Input
+                            v-validate="`required|min:6|max:16`"
+                            name="email-password"
+                            ref="email-password"
+                            type="password"
+                            v-model="email.data.password"
+                        />
                     </FormItem>
                     <FormItem>
                         <Button
@@ -135,9 +186,16 @@
                         <span v-t="`delete.modal-title`"></span>
                     </p>
                     <div v-t="`delete.modal-notice`"></div>
-                    <Form ref="delete" :model="deleteConfirm.data" :rules="deleteConfirm.rules">
-                        <FormItem prop="password">
+                    <Form>
+                        <FormItem
+                            prop="password"
+                            :error="errors.first('delete-confirm')"
+                            :validateStatus="hasValidateError('delete-confirm')"
+                        >
                             <Input
+                                v-validate="`required|min:6|max:16`"
+                                name="delete-confirm"
+                                ref="delete-confirm"
                                 v-model="deleteConfirm.data.password"
                                 type="password"
                                 :placeholder="$t('delete.password')"
@@ -163,78 +221,25 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import gql from 'graphql-tag';
 import zxcvbn from 'zxcvbn';
-import { State } from '../../libs/store';
+import VeeValidateZhCn from 'vee-validate/dist/locale/zh_CN';
+import { lang } from '../../libs/i18n';
 
 type FormState = 'normal' | 'pending' | 'success' | 'error';
 type PasswordFormState = FormState | 'wrong-password';
 type FormData = {
-    readonly rules: { readonly [key: string]: Array<Object> };
     data: { [key: string]: string };
+};
+type Forms = {
+    password: FormData & { state: PasswordFormState };
+    nickname: FormData & { state: FormState };
+    email: FormData & { state: PasswordFormState; autoComplete: string[] };
+    deleteConfirm: FormData & { modal: boolean };
 };
 
 export default Vue.extend({
-    data(): {
-        password: FormData & { state: PasswordFormState };
-        nickname: FormData & { state: FormState };
-        email: FormData & { state: PasswordFormState; autoComplete: string[] };
-        deleteConfirm: FormData & { modal: boolean };
-    } {
+    data(): Forms {
         return {
             password: {
-                rules: {
-                    old: [
-                        {
-                            required: true,
-                            message: this.$t('password.empty-old')
-                        },
-                        {
-                            min: 6,
-                            max: 16,
-                            message: this.$t('password.invalid-old')
-                        }
-                    ],
-                    new: [
-                        {
-                            required: true,
-                            message: this.$t('password.empty-new')
-                        },
-                        {
-                            min: 8,
-                            max: 16,
-                            message: this.$t('password.invalid-new')
-                        }
-                    ],
-                    confirm: [
-                        {
-                            required: true,
-                            message: this.$t('password.empty-confirm')
-                        },
-                        {
-                            validator: (
-                                rule: any,
-                                value: string,
-                                callback: (result?: Error) => Promise<boolean>
-                            ): Promise<boolean> => {
-                                // Reason: When initializing component's `data`,
-                                // we could not get other `data` property.
-                                // However in runtime, this function just will be
-                                // ran after component has been initialized.
-                                // @ts-ignore
-                                if (value !== this.password.data.new) {
-                                    return callback(
-                                        new Error(
-                                            this.$t(
-                                                'password.invalid-confirm'
-                                            ).toString()
-                                        )
-                                    );
-                                } else {
-                                    return callback();
-                                }
-                            }
-                        }
-                    ]
-                },
                 data: {
                     old: '',
                     new: '',
@@ -243,82 +248,12 @@ export default Vue.extend({
                 state: 'normal'
             },
             nickname: {
-                rules: {
-                    nickname: [
-                        { required: true, message: this.$t('nickname.empty') },
-                        { max: 16, message: this.$t('nickname.too-long') }
-                    ]
-                },
                 data: {
                     nickname: ''
                 },
                 state: 'normal'
             },
             email: {
-                rules: {
-                    email: [
-                        {
-                            required: true,
-                            message: this.$t('email.empty-email')
-                        },
-                        {
-                            type: 'email',
-                            message: this.$t('email.invalid-email')
-                        },
-                        {
-                            validator: async (
-                                rule: any,
-                                value: string,
-                                callback: Function
-                            ) => {
-                                if (value === (this.$store.state as State).user.email) {
-                                    return callback(
-                                        new Error(
-                                            this.$t(
-                                                'email.same-with-now'
-                                            ).toString()
-                                        )
-                                    );
-                                }
-
-                                const {
-                                    data: { users }
-                                }: {
-                                    data: { users: User[] };
-                                } = await this.$apollo.query({
-                                    query: gql`
-                                        query {
-                                            users(email: "${value}") {
-                                                email
-                                            }
-                                        }
-                                    `
-                                });
-                                if (users.length === 0) {
-                                    return callback();
-                                } else {
-                                    callback(
-                                        new Error(
-                                            this.$t('email.existed').toString()
-                                        )
-                                    );
-                                }
-                            },
-                            trigger: 'blur'
-                        }
-                    ],
-                    password: [
-                        {
-                            required: true,
-                            message: this.$t('email.empty-password')
-                        },
-                        {
-                            min: 6,
-                            max: 16,
-                            message: this.$t('password.invalid-old')
-                        }
-                    ]
-                },
                 data: {
                     email: '',
                     password: ''
@@ -327,19 +262,6 @@ export default Vue.extend({
                 autoComplete: []
             },
             deleteConfirm: {
-                rules: {
-                    password: [
-                        {
-                            required: true,
-                            message: this.$t('email.empty-password')
-                        },
-                        {
-                            min: 6,
-                            max: 16,
-                            message: this.$t('password.invalid-old')
-                        }
-                    ]
-                },
                 data: {
                     password: ''
                 },
@@ -348,11 +270,39 @@ export default Vue.extend({
         };
     },
     methods: {
-        validate(entry: string): Promise<boolean> {
-            // We ingore TS error below
-            // because `validate` method is not existed on standard Vue `ref` object
-            // @ts-ignore
-            return this.$refs[entry].validate(this[entry].rules);
+        async validate(formName: keyof Forms): Promise<boolean> {
+            const fields = {
+                password: ['old-password', 'new-password', 'confirm-password'],
+                nickname: ['nickname'],
+                email: ['email', 'email-password'],
+                deleteConfirm: ['delete-confirm']
+            }[formName];
+
+            const validations = await Promise.all(
+                fields.map(async (field): Promise<{
+                    field: string;
+                    valid: boolean;
+                }> => ({
+                    field,
+                    valid: await this.$validator.validate(field)
+                }))
+            );
+            for (const validation of validations) {
+                if (!validation.valid) {
+                    // `email` field is a `AutoComplete` component
+                    // which does not has `focus` method.
+                    if (validation.field !== 'email') {
+                        (this.$refs[validation.field] as Vue & {
+                            focus: Function;
+                        }).focus();
+                    }
+                    return false;
+                }
+            }
+            return true;
+        },
+        hasValidateError(field: string): 'error' | '' {
+            return this.$validator.errors.has(field) ? 'error' : '';
         },
         completeEmail(value: string): void {
             if (!value) {
@@ -398,8 +348,7 @@ export default Vue.extend({
             this.deleteConfirm.data.password = '';
         },
         async deleteAccount(): Promise<void> {
-            const password = this.deleteConfirm.data.password;
-            if (password.length < 6 || password.length > 16) {
+            if (!await this.validate('deleteConfirm')) {
                 return;
             }
 
@@ -409,7 +358,9 @@ export default Vue.extend({
                 } = await this.$apollo.mutate({
                     mutation: gql`
                         mutation {
-                            deleteAccount(password: "${password}") {
+                            deleteAccount(password: "${
+                                this.deleteConfirm.data.password
+                            }") {
                                 uid
                             }
                         }
@@ -529,6 +480,21 @@ export default Vue.extend({
                 `password.strength[${zxcvbn(this.password.data.new).score}]`
             );
         }
+    },
+    created() {
+        this.$validator.localize('zh-cn', {
+            messages: VeeValidateZhCn.messages,
+            attributes: {
+                'old-password': this.$t('password.old'),
+                'new-password': this.$t('password.new'),
+                'confirm-password': this.$t('password.confirm'),
+                nickname: this.$t('nickname.field'),
+                email: this.$t('email.new'),
+                'email-password': this.$t('email.password'),
+                'delete-confirm': this.$t('delete.password')
+            }
+        });
+        this.$validator.locale = lang();
     }
 });
 </script>
@@ -558,12 +524,6 @@ en:
     button: Change Password
     wrong-password: Original password is not correct.
     success: Password updated successfully, please log in again.
-    empty-old: Original password is required.
-    empty-new: Empty new password.
-    invalid-old: Invalid password. The length of password should between 6 and 16.
-    invalid-new: Invalid password. The length of password should between 8 and 16.
-    empty-confirm: Empty confirming password.
-    invalid-confirm: Confirming password does not equal with password.
     strength:
       - Very weak
       - Weak
@@ -572,11 +532,10 @@ en:
       - Very Strong
 
   nickname:
+    field: Nickname
     title: Change Nickname
     blank: No nickname is setted now.
     rule: Whatever you like expect special characters
-    too-long: Your nickname is too long.
-    empty: Empty nickname.
     success: Nickname is successfully updated to {nickname}
 
   email:
@@ -585,12 +544,7 @@ en:
     password: Current Password
     button: Change Email
     wrong-password: Wrong password.
-    same-with-now: You are using this email now.
-    existed: This email address is used.
     success: Email address updated successfully, please log in again.
-    empty-email: Empty email address.
-    invalid-email: Invalid format of email address.
-    empty-password: Password is required.
 
   delete:
     title: Delete Account
@@ -620,12 +574,6 @@ zh-cn:
     button: 修改密码
     wrong-password: 原密码错误
     success: 密码修改成功，请重新登录
-    empty-old: 原密码不能为空
-    empty-new: 新密码要好好填哦
-    invalid-old: 无效的密码。密码长度应该大于 6 并小于 16。
-    invalid-new: 无效的密码。密码长度应该大于 8 并小于 16。
-    empty-confirm: 确认密码不能为空
-    invalid-confirm: 密码和确认的密码不一样诶？
     strength:
       - 很弱
       - 较弱
@@ -634,11 +582,10 @@ zh-cn:
       - 很强
 
   nickname:
+    field: 昵称
     title: 更改昵称
     blank: 当前未设置昵称
     rule: 可使用除一些特殊符号外的任意字符
-    too-long: 您的昵称太长了
-    empty: 您还没有填写昵称哦
     success: 昵称已成功设置为 {nickname}
 
   email:
@@ -647,12 +594,7 @@ zh-cn:
     password: 当前密码
     button: 修改邮箱
     wrong-password: 密码错误
-    same-with-now: 您现在已经使用这个邮箱。
-    existed: 这个邮箱已经被别人占用啦
     success: 邮箱修改成功，请重新登录
-    empty-email: 您还没有填写邮箱哦
-    invalid-email: 邮箱格式不正确！
-    empty-password: 密码要好好填哦
 
   delete:
     title: 删除账号

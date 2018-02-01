@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import VueApollo from 'vue-apollo';
 import VueI18n from 'vue-i18n';
+import VeeValidate from 'vee-validate';
 import { AxiosInstance } from 'axios';
 import { Moment } from 'moment';
 import { DocumentNode } from 'graphql';

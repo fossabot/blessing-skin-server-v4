@@ -4,7 +4,7 @@ import generalText from './i18n.yaml';
 
 Vue.use(VueI18n);
 
-function lang(): string {
+export function lang(): string {
     const preset = localStorage.getItem('language');
     if (preset) return preset;
 
