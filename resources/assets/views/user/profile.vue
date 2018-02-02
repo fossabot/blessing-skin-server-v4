@@ -226,14 +226,19 @@ import { lang } from '../../libs/i18n';
 
 type FormState = 'normal' | 'pending' | 'success' | 'error';
 type PasswordFormState = FormState | 'wrong-password';
-type FormData = {
-    data: { [key: string]: string };
+type FormData<T extends string> = {
+    data: Record<T, string>;
 };
 type Forms = {
-    password: FormData & { state: PasswordFormState };
-    nickname: FormData & { state: FormState };
-    email: FormData & { state: PasswordFormState; autoComplete: string[] };
-    deleteConfirm: FormData & { modal: boolean };
+    password: FormData<'old' | 'new' | 'confirm'> & {
+        state: PasswordFormState;
+    };
+    nickname: FormData<'nickname'> & { state: FormState };
+    email: FormData<'email' | 'password'> & {
+        state: PasswordFormState;
+        autoComplete: string[];
+    };
+    deleteConfirm: FormData<'password'> & { modal: boolean };
 };
 
 export default Vue.extend({
