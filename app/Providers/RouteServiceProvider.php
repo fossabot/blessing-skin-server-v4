@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Barryvdh\Cors\HandleCors;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,7 +25,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $kernel = $this->app->make(Kernel::class);
+        if (config('app.env') == 'production') {
+            $kernel->pushMiddleware('throttle:60,1');
+        } else {
+            $kernel->pushMiddleware(HandleCors::class);
+        }
 
         parent::boot();
     }
