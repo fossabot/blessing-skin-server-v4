@@ -90,9 +90,13 @@ export default Vue.extend({
     },
     computed: {
         usedStorage(): number {
+            if (this.currentUser.closet.length === 0) {
+                return 0;
+            }
+
             return this.currentUser.closet
-                .map((item: { texture: { size: number } }) => item.texture.size)
-                .reduce((size, carry) => size + carry);
+                .map(item => item.texture.size)
+                .reduce((size, carry) => size + carry, 0);
         },
         storagePercent(): number {
             if (this.usedStorage === 0) {
@@ -160,8 +164,8 @@ export default Vue.extend({
         announcement: string;
         readonly currentUser: {
             readonly score: number;
-            readonly players: any[];
-            readonly closet: any[];
+            readonly players: Player[];
+            readonly closet: ClosetItem[];
             readonly last_signed_at: string;
         };
         scoreInfo: {
