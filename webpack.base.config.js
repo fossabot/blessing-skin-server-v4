@@ -88,6 +88,7 @@ module.exports = {
         }
     },
     plugins: [
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /(zh-cn|en-us)/),
         new HappyPack({
             id: 'css',
             loaders: ['css-loader?minimize', 'autoprefixer-loader']
