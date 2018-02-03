@@ -295,8 +295,13 @@ export default Vue.extend({
             for (const validation of validations) {
                 if (!validation.valid) {
                     // `email` field is a `AutoComplete` component
-                    // which does not has `focus` method.
-                    if (validation.field !== 'email') {
+                    // which does not have `focus` method.
+                    if (validation.field === 'email') {
+                        ((this.$refs.email as Vue).$children[0].$slots.input[0]
+                            .componentInstance as Vue & {
+                            focus: Function;
+                        }).focus();
+                    } else {
                         (this.$refs[validation.field] as Vue & {
                             focus: Function;
                         }).focus();
@@ -306,7 +311,7 @@ export default Vue.extend({
             }
             return true;
         },
-        hasValidateError(field: string): 'error' | '' {
+        hasValidateError(field: string) {
             return this.$validator.errors.has(field) ? 'error' : '';
         },
         completeEmail(value: string): void {
