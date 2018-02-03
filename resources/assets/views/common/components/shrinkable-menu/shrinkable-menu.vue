@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import 'core-js/fn/array/includes';
 import SidebarMenu from './components/sidebarMenu.vue';
 import SidebarMenuShrink from './components/sidebarMenuShrink.vue';
 

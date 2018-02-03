@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import generalText from './i18n.yaml';
+import 'core-js/fn/array/includes';
 
 Vue.use(VueI18n);
 
