@@ -52,7 +52,7 @@
                         @click="sign"
                         class="btn-sign"
                         type="primary"
-                        :title="$t('last-sign', { time: currentUser.last_signed_at })"
+                        :title="$t('last-sign', { time: lastSignedDiff() })"
                         :disabled="!canSign">
                         {{ signButtonText }}
                     </i-button>
@@ -76,6 +76,9 @@ import 'moment-precise-range-plugin';
 import VueMarkdown from 'vue-markdown';
 import VueI18n from 'vue-i18n';
 import CURRENT_USER from '../../graphql/query/currentUser.gql';
+import { lang } from '../../libs/i18n';
+
+moment.locale(lang());
 
 export default Vue.extend({
     components: {
@@ -242,6 +245,13 @@ export default Vue.extend({
                       unit: this.$t('hour')
                   }
                 : { time: diff.minutes, unit: this.$t('min') };
+        },
+        lastSignedDiff(): string {
+            return moment
+                .duration(
+                    moment(this.currentUser.last_signed_at).diff(moment.now())
+                )
+                .humanize();
         }
     },
     created(): void {
@@ -294,7 +304,7 @@ en:
     sign-failed: Failed to sign.
     hour: h
     min: min
-    last-sign: 'Last signed at {time}'
+    last-sign: 'Last signed at {time} ago'
     sign-remain-time: 'Available after {time} {unit}'
     announcement: Announcement
 
@@ -324,7 +334,7 @@ zh-cn:
     sign-failed: 签到失败
     hour: 小时
     min: 分钟
-    last-sign: '上次签到于 {time}'
+    last-sign: '上次签到于 {time} 之前'
     sign-remain-time: '{time}{unit}后可签到'
     announcement: 公告
 
