@@ -19,12 +19,12 @@
             :style="{ paddingLeft: shrink ? sidebarWidth() : '200px' }">
             <div class="main-header">
                 <div class="navicon-con">
-                    <Button
+                    <i-button
                         :style="{transform: `rotateZ(${this.shrink ? '-90' : '0'}deg)`}"
                         type="text"
                         @click="toggleSidebar">
-                        <Icon type="navicon" size="32"></Icon>
-                    </Button>
+                        <i-icon type="navicon" size="32"></i-icon>
+                    </i-button>
                 </div>
                 <div class="header-middle-con">
                     <div class="main-breadcrumb">

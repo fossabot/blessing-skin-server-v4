@@ -1,39 +1,39 @@
 <template>
     <div>
-        <Row :gutter="16">
-            <Col :sm="24" :md="16" :lg="16">
-                <Card>
+        <i-row :gutter="16">
+            <i-col :sm="24" :md="16" :lg="16">
+                <i-card>
                     <p slot="title" v-t="`used.title`" />
-                    <Row :gutter="16">
-                        <Col :sm="24" :lg="16">
+                    <i-row :gutter="16">
+                        <i-col :sm="24" :lg="16">
                             <div>
                                 {{ $t('used.players') }}
                             </div>
-                            <Progress :percent="playersPercent">
+                            <i-progress :percent="playersPercent">
                                 <b>{{ currentUser.players.length }}</b> /
                                 {{ totalPlayers }}
-                            </Progress>
+                            </i-progress>
                             <div>
                                 {{ $t('used.storage') }}
                             </div>
-                            <Progress class="storage-progress" :percent="storagePercent">
+                            <i-progress class="storage-progress" :percent="storagePercent">
                                 <b>{{ usedStorage }}</b> /
                                 {{ currentUser.score }}
-                            </Progress>
-                        </Col>
-                        <Col :sm="24" :lg="8">
+                            </i-progress>
+                        </i-col>
+                        <i-col :sm="24" :lg="8">
                             <div class="score">
                                 <div v-t="`cur-score`"></div>
                                 <div class="score-num">{{ currentUser.score }}</div>
                             </div>
-                        </Col>
-                    </Row>
-                    <Collapse class="score-intro">
-                        <Panel>
+                        </i-col>
+                    </i-row>
+                    <i-collapse class="score-intro">
+                        <i-panel>
                             {{ $t('score-intro.title') }}
                             <p slot="content">{{ scoreIntro }}</p>
-                        </Panel>
-                        <Panel>
+                        </i-panel>
+                        <i-panel>
                             {{ $t('rates.title') }}
                             <p slot="content">
                                 <span v-t="{
@@ -46,25 +46,25 @@
                                     args: { score: scoreInfo.perPlayer }
                                 }"></span>
                             </p>
-                        </Panel>
-                    </Collapse>
-                    <Button
+                        </i-panel>
+                    </i-collapse>
+                    <i-button
                         @click="sign"
                         class="btn-sign"
                         type="primary"
                         :title="$t('last-sign', { time: currentUser.last_signed_at })"
                         :disabled="!canSign">
                         {{ signButtonText }}
-                    </Button>
-                </Card>
-            </Col>
-            <Col :sm="24" :md="8" :lg="8">
-                <Card>
+                    </i-button>
+                </i-card>
+            </i-col>
+            <i-col :sm="24" :md="8" :lg="8">
+                <i-card>
                     <p slot="title" v-t="`announcement`" />
                     <vue-markdown :source="announcement" />
-                </Card>
-            </Col>
-        </Row>
+                </i-card>
+            </i-col>
+        </i-row>
     </div>
 </template>
 
@@ -157,22 +157,22 @@ export default Vue.extend({
         }
     },
     data(): {
-        announcement: string,
+        announcement: string;
         readonly currentUser: {
-            readonly score: number,
-            readonly players: any[],
-            readonly closet: any[],
-            readonly last_signed_at: string
-        },
+            readonly score: number;
+            readonly players: any[];
+            readonly closet: any[];
+            readonly last_signed_at: string;
+        };
         scoreInfo: {
-            signAfterZero: boolean,
-            signGapTime: number,
-            perPlayer: number,
-            perStorage: number,
-            returnScore: boolean,
-            initial: number,
-            signScore: string
-        }
+            signAfterZero: boolean;
+            signGapTime: number;
+            perPlayer: number;
+            perStorage: number;
+            returnScore: boolean;
+            initial: number;
+            signScore: string;
+        };
     } {
         return {
             announcement: '',

@@ -2,47 +2,47 @@
     <div>
         <template v-for="item in menuList">
             <div class="shrinked-sidebar" :key="item.name">
-                <Dropdown
+                <i-dropdown
                     transfer
                     v-if="item.children"
                     placement="right-start"
                     :key="item.name"
                     @on-click="gotoLink">
-                    <Button class="btn" type="text">
-                        <Icon :size="20" :color="iconColor" :type="item.icon" />
-                    </Button>
-                    <DropdownMenu class="dropdown-menu" slot="list">
+                    <i-button class="btn" type="text">
+                        <i-icon :size="20" :color="iconColor" :type="item.icon" />
+                    </i-button>
+                    <i-dropdown-menu class="dropdown-menu" slot="list">
                         <template v-for="child in item.children">
-                            <DropdownItem :name="child.name" :key="child.name">
-                                <Icon :type="child.icon"></Icon>
+                            <i-dropdown-item :name="child.name" :key="child.name">
+                                <i-icon :type="child.icon"></i-icon>
                                 <span v-t="child.text" class="item-text" />
-                            </DropdownItem>
+                            </i-dropdown-item>
                         </template>
-                    </DropdownMenu>
-                </Dropdown>
-                <Dropdown
+                    </i-dropdown-menu>
+                </i-dropdown>
+                <i-dropdown
                     transfer
                     v-else
                     placement="right-start"
                     :key="item.name"
                     @on-click="gotoLink">
-                    <Button
+                    <i-button
                         @click="gotoLink(item.name)"
                         class="btn"
                         type="text">
-                        <Icon
+                        <i-icon
                             :size="20"
                             :color="iconColor"
                             :type="item.icon">
-                        </Icon>
-                    </Button>
-                    <DropdownMenu class="dropdown-menu" slot="list">
-                        <DropdownItem :name="item.name">
-                            <Icon :type="item.icon"></Icon>
+                        </i-icon>
+                    </i-button>
+                    <i-dropdown-menu class="dropdown-menu" slot="list">
+                        <i-dropdown-item :name="item.name">
+                            <i-icon :type="item.icon"></i-icon>
                             <span class="item-text" v-t="item.text" />
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
+                        </i-dropdown-item>
+                    </i-dropdown-menu>
+                </i-dropdown>
             </div>
         </template>
     </div>

@@ -1,31 +1,31 @@
 <template>
     <div ref="avatarCon" class="header-avator-con">                    
         <div class="user-dropdown-menu-con">
-            <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
-                <Dropdown transfer trigger="click" @on-click="changeLang">
+            <i-row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
+                <i-dropdown transfer trigger="click" @on-click="changeLang">
                     <a style="cursor: pointer;">
                         <span class="main-user-name">{{ currentLangName }}</span>
-                        <Icon type="arrow-down-b"></Icon>
+                        <i-icon type="arrow-down-b"></i-icon>
                     </a>
-                    <DropdownMenu slot="list">
-                        <DropdownItem
+                    <i-dropdown-menu slot="list">
+                        <i-dropdown-item
                             v-for="lang in langs"
                             :key="lang.value"
                             :name="lang.value"
-                        >{{ lang.text }}</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-                <Dropdown transfer trigger="click" @on-click="logout">
+                        >{{ lang.text }}</i-dropdown-item>
+                    </i-dropdown-menu>
+                </i-dropdown>
+                <i-dropdown transfer trigger="click" @on-click="logout">
                     <a style="cursor: pointer;">
                         <span class="main-user-name">{{ $store.state.user.nickname }}</span>
-                        <Icon type="arrow-down-b"></Icon>
+                        <i-icon type="arrow-down-b"></i-icon>
                     </a>
-                    <DropdownMenu slot="list">
-                        <DropdownItem name="logout" v-t="`logout.action`" />
-                    </DropdownMenu>
-                </Dropdown>
-                <Avatar src="" class="avatar"></Avatar>
-            </Row>
+                    <i-dropdown-menu slot="list">
+                        <i-dropdown-item name="logout" v-t="`logout.action`" />
+                    </i-dropdown-menu>
+                </i-dropdown>
+                <i-avatar src="" class="avatar"></i-avatar>
+            </i-row>
         </div>
     </div>
 </template>

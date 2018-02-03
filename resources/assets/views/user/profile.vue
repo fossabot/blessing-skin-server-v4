@@ -1,29 +1,29 @@
 <template>
-    <Row :gutter="16">
-        <Col :xs="24" :lg="12">
-            <Card>
+    <i-row :gutter="16">
+        <i-col :xs="24" :lg="12">
+            <i-card>
                 <p slot="title" v-t="`password.title`"></p>
-                <Form>
-                    <FormItem
+                <i-form>
+                    <i-form-item
                         :label="$t('password.old')"
                         :error="errors.first('old-password')"
                         :validateStatus="hasValidateError('old-password')"
                     >
-                        <Input
+                        <i-input
                             v-validate="`required|min:6|max:16`"
                             name="old-password"
                             ref="old-password"
                             v-model="password.data.old"
                             type="password"
                         />
-                    </FormItem>
-                    <FormItem
+                    </i-form-item>
+                    <i-form-item
                         :label="$t('password.new')"
                         :error="errors.first('new-password')"
                         :validateStatus="hasValidateError('new-password')"
                     >
                         <span>{{ passwordStrength }}</span>
-                        <Input
+                        <i-input
                             v-validate="`required|min:8|max:16`"
                             name="new-password"
                             ref="new-password"
@@ -32,74 +32,74 @@
                             type="password"
                             @input="password.data.confirm = ''"
                         />
-                    </FormItem>
-                    <FormItem
+                    </i-form-item>
+                    <i-form-item
                         :label="$t('password.confirm')"
                         :error="errors.first('confirm-password')"
                         :validateStatus="hasValidateError('confirm-password')"
                     >
-                        <Input
+                        <i-input
                             v-validate="`required|confirmed:new-password`"
                             name="confirm-password"
                             ref="confirm-password"
                             v-model="password.data.confirm"
                             type="password"
                         />
-                    </FormItem>
-                    <FormItem>
-                        <Button
+                    </i-form-item>
+                    <i-form-item>
+                        <i-button
                             @click="updatePassword"
                             type="primary"
                             :loading="password.state === 'pending'"
-                        >{{ $t('password.button') }}</Button>
-                        <Alert
+                        >{{ $t('password.button') }}</i-button>
+                        <i-alert
                             style="display: inline"
                             v-if="password.state === 'success'"
                             type="success"
                             show-icon
-                        >{{ $t('password.success') }}</Alert>
-                        <Alert
+                        >{{ $t('password.success') }}</i-alert>
+                        <i-alert
                             style="display: inline"
                             v-else-if="password.state === 'wrong-password'"
                             type="error"
                             show-icon
-                        >{{ $t('password.wrong-password') }}</Alert>
-                        <Alert
+                        >{{ $t('password.wrong-password') }}</i-alert>
+                        <i-alert
                             style="display: inline"
                             v-else-if="password.state === 'error'"
                             type="error"
                             show-icon
-                        >{{ $t('error') }}</Alert>
-                    </FormItem>
-                </Form>
-            </Card>
-        </Col>
-        <Col :xs="24" :lg="12">
-            <Card>
+                        >{{ $t('error') }}</i-alert>
+                    </i-form-item>
+                </i-form>
+            </i-card>
+        </i-col>
+        <i-col :xs="24" :lg="12">
+            <i-card>
                 <p slot="title" v-t="`nickname.title`"></p>
-                <Form>
-                    <FormItem
+                <i-form>
+                    <i-form-item
                         prop="nickname"
                         :error="errors.first('nickname')"
                         :validateStatus="hasValidateError('nickname')"
                     >
-                        <Input
+                        <i-input
                             v-validate="`required|max:16`"
                             name="nickname"
                             ref="nickname"
                             v-model="nickname.data.nickname"
                             :placeholder="$t('nickname.rule')"
                         >
-                            <Icon type="person" slot="append"></Icon>
-                        </Input>
-                    </FormItem>
-                    <FormItem>
-                        <Button
+                            <i-icon type="person" slot="append"></i-icon>
+                        </i-input>
+                    </i-form-item>
+                    <i-form-item>
+                        <i-button
                             @click="updateNickname"
                             type="primary"
                             :loading="nickname.state === 'pending'"
-                        >{{ $t('nickname.title') }}</Button>
-                        <Alert
+                        >{{ $t('nickname.title') }}</i-button>
+                        <i-alert
                             style="display: inline"
                             v-if="nickname.state === 'success'"
                             type="success"
@@ -107,26 +107,26 @@
                         >{{ $t(
                             'nickname.success',
                             { nickname: nickname.data.nickname }
-                        ) }}</Alert>
-                        <Alert
+                        ) }}</i-alert>
+                        <i-alert
                             style="display: inline"
                             v-else-if="nickname.state === 'error'"
                             type="error"
                             show-icon
-                        >{{ $t('error') }}</Alert>
-                    </FormItem>
-                </Form>
-            </Card>
+                        >{{ $t('error') }}</i-alert>
+                    </i-form-item>
+                </i-form>
+            </i-card>
 
-            <Card>
+            <i-card>
                 <p slot="title" v-t="`email.title`"></p>
-                <Form>
-                    <FormItem
+                <i-form>
+                    <i-form-item
                         :label="$t('email.new')"
                         :error="errors.first('email')"
                         :validateStatus="hasValidateError('email')"
                     >
-                        <AutoComplete
+                        <i-auto-complete
                             v-validate="`required|email|unique-email`"
                             name="email"
                             ref="email"
@@ -134,65 +134,65 @@
                             :data="email.autoComplete"
                             @on-search="completeEmail"
                         />
-                    </FormItem>
-                    <FormItem
+                    </i-form-item>
+                    <i-form-item
                         :label="$t('email.password')"
                         :error="errors.first('email-password')"
                         :validateStatus="hasValidateError('email-password')"
                     >
-                        <Input
+                        <i-input
                             v-validate="`required|min:6|max:16`"
                             name="email-password"
                             ref="email-password"
                             type="password"
                             v-model="email.data.password"
                         />
-                    </FormItem>
-                    <FormItem>
-                        <Button
+                    </i-form-item>
+                    <i-form-item>
+                        <i-button
                             @click="updateEmail"
                             type="warning"
                             :loading="email.state === 'pending'"
-                        >{{ $t('email.title') }}</Button>
-                        <Alert
+                        >{{ $t('email.title') }}</i-button>
+                        <i-alert
                             style="display: inline"
                             v-if="email.state === 'success'"
                             type="success"
                             show-icon
-                        >{{ $t('email.success') }}</Alert>
-                        <Alert
+                        >{{ $t('email.success') }}</i-alert>
+                        <i-alert
                             style="display: inline"
                             v-else-if="email.state === 'wrong-password'"
                             type="error"
                             show-icon
-                        >{{ $t('password.wrong-password') }}</Alert>
-                        <Alert
+                        >{{ $t('password.wrong-password') }}</i-alert>
+                        <i-alert
                             style="display: inline"
                             v-else-if="email.state === 'error'"
                             type="error"
                             show-icon
-                        >{{ $t('error') }}</Alert>
-                    </FormItem>
-                </Form>
-            </Card>
+                        >{{ $t('error') }}</i-alert>
+                    </i-form-item>
+                </i-form>
+            </i-card>
 
-            <Card v-if="!$store.getters.isAdmin" class="card-delete-user">
+            <i-card v-if="!$store.getters.isAdmin" class="card-delete-user">
                 <p slot="title" v-t="`delete.title`"></p>
                 <p v-t="`delete.notice`"></p>
-                <Button @click="showDeleteConfirm" type="error" v-t="`delete.button`" />
-                <Modal v-model="deleteConfirm.modal">
+                <i-button @click="showDeleteConfirm" type="error" v-t="`delete.button`" />
+                <i-modal v-model="deleteConfirm.modal">
                     <p slot="header" style="color:#f60; text-align:center">
-                        <Icon type="information-circled"></Icon>
+                        <i-icon type="information-circled"></i-icon>
                         <span v-t="`delete.modal-title`"></span>
                     </p>
                     <div v-t="`delete.modal-notice`"></div>
-                    <Form>
-                        <FormItem
+                    <i-form>
+                        <i-form-item
                             prop="password"
                             :error="errors.first('delete-confirm')"
                             :validateStatus="hasValidateError('delete-confirm')"
                         >
-                            <Input
+                            <i-input
                                 v-validate="`required|min:6|max:16`"
                                 name="delete-confirm"
                                 ref="delete-confirm"
@@ -200,20 +200,20 @@
                                 type="password"
                                 :placeholder="$t('delete.password')"
                             />
-                        </FormItem>
-                    </Form>
+                        </i-form-item>
+                    </i-form>
                     <div slot="footer">
                         <Button v-t="`ok`" @click="deleteAccount" />
                         <Button v-t="`cancel`" @click="cancelDelete" />
                     </div>
-                </Modal>
-            </Card>
-            <Card v-else class="card-delete-user">
+                </i-modal>
+            </i-card>
+            <i-card v-else class="card-delete-user">
                 <p slot="title" v-t="`delete.title`"></p>
                 <p v-t="`delete.admin`"></p>
-            </Card>
-        </Col>
-    </Row>
+            </i-card>
+        </i-col>
+    </i-row>
 </template>
 
 <script lang="ts">
