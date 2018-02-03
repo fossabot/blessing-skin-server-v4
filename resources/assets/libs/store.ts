@@ -61,7 +61,10 @@ const store = new Vuex.Store({
                     }
                 `
             });
-            commit('updateUserInfo', (data as { currentUser: User }).currentUser);
+            commit(
+                'updateUserInfo',
+                (data as { currentUser: User }).currentUser
+            );
         }
     }
 });

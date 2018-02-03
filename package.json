@@ -19,7 +19,10 @@
     "init": "webpack --progress --config webpack.dev.config.js",
     "dev": "webpack-dev-server --content-base ./ --inline --hot --compress --history-api-fallback --host 0.0.0.0 --config webpack.dev.config.js",
     "build": "webpack --progress --hide-modules --config webpack.prod.config.js",
-    "lint": "eslint --fix --format 'node_modules/eslint-friendly-formatter' --ext .js,.vue resources/assets"
+    "eslint": "eslint --format 'node_modules/eslint-friendly-formatter' --ext .ts,.vue resources/assets",
+    "prettier": "prettier --config --write 'resources/assets/**/*.{vue,ts,less,gql,graphql}'",
+    "lint": "yarn eslint --fix && yarn prettier --loglevel warn",
+    "lint:check": "yarn eslint && yarn prettier --list-different"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.1.5",
@@ -62,6 +65,7 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "node-notifier": "^5.2.1",
+    "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
     "style-loader": "^0.19.1",
     "ts-loader": "^3.3.1",
