@@ -108,7 +108,7 @@ export default Vue.extend({
             return this.usedStorage / this.currentUser.score;
         },
         totalPlayers(): number {
-            return ~~(this.currentUser.score / 100);
+            return ~~(this.currentUser.score / this.scoreInfo.perPlayer);
         },
         playersPercent(): number {
             const count = this.currentUser.players.length;

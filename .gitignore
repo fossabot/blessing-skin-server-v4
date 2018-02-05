@@ -8,6 +8,7 @@
 /.idea
 /.vagrant
 /.DS_Store
+/coverage
 Homestead.json
 Homestead.yaml
 npm-debug.log
@@ -19,4 +20,3 @@ _ide_helper_models.php
 .phpstorm.meta.php
 resources/views/index.blade.php
 resources/assets/config/*.tmp
-resources/assets/config/env.js
