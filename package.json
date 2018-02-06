@@ -17,9 +17,9 @@
   "private": true,
   "scripts": {
     "init": "webpack --progress --config webpack.dev.config.js",
-    "dev": "webpack-dev-server --content-base ./ --inline --hot --compress --history-api-fallback --host 0.0.0.0 --config webpack.dev.config.js",
-    "build": "webpack --progress --hide-modules --config webpack.prod.config.js",
-    "unit": "mocha-webpack --webpack-config webpack.test.config.js --require resources/assets/tests/setup.js resources/assets/tests/**/*.test.ts",
+    "dev": "webpack-dev-server --hot --config resources/assets/build/webpack.dev.conf.js",
+    "build": "webpack --progress --hide-modules --config resources/assets/build/webpack.prod.conf.js",
+    "unit": "mocha-webpack --webpack-config resources/assets/build/webpack.test.conf.js --require resources/assets/tests/setup.js resources/assets/tests/**/*.test.ts",
     "unit:watch": "yarn unit --watch",
     "test": "yarn unit",
     "eslint": "eslint --format 'node_modules/eslint-friendly-formatter' --ext .ts,.vue resources/assets",

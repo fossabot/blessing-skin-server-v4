@@ -2,11 +2,11 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
-const webpackBaseConfig = require('./webpack.base.config.js');
+const webpackBaseConfig = require('./webpack.base.conf');
 const path = require('path');
 const rimraf = require('rimraf');
 
-rimraf.sync(path.join(__dirname, './public/assets'));
+rimraf.sync(path.join(__dirname, '..', '..', '..', 'public', 'assets'));
 
 module.exports = merge(webpackBaseConfig, {
     output: {
@@ -47,7 +47,7 @@ module.exports = merge(webpackBaseConfig, {
             }
         }),
         new HtmlWebpackPlugin({
-            filename: path.join(__dirname, './resources/views/index.blade.php'),
+            filename: path.join(__dirname, '../../views/index.blade.php'),
             template: './resources/assets/template/index.ejs',
             inject: true,
             minify: {

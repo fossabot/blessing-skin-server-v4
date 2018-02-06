@@ -7,7 +7,7 @@ module.exports = {
         main: './resources/assets/main.ts'
     },
     output: {
-        path: path.join(__dirname, './public/assets')
+        path: path.join(__dirname, '..', '..', '..', 'public', 'assets')
     },
     module: {
         rules: [
@@ -64,10 +64,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: [
-                        'css-loader?minimize',
-                        'autoprefixer-loader'
-                    ],
+                    use: ['css-loader?minimize', 'autoprefixer-loader'],
                     fallback: 'style-loader'
                 })
             },
@@ -91,7 +88,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.vue', '.ts'],
-        modules: [path.resolve(__dirname, 'node_modules')],
+        modules: [path.resolve(__dirname, '..', '..', '..', 'node_modules')],
         alias: {
             vue: 'vue/dist/vue.esm.js'
         }

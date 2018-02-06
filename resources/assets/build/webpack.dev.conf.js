@@ -1,8 +1,9 @@
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
-const webpackBaseConfig = require('./webpack.base.config.js');
+const webpackBaseConfig = require('./webpack.base.conf');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
 
@@ -16,7 +17,7 @@ module.exports = merge(webpackBaseConfig, {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: "'development'"
+                NODE_ENV: '\'development\''
             }
         }),
         new ExtractTextPlugin({
@@ -28,7 +29,7 @@ module.exports = merge(webpackBaseConfig, {
             filename: 'vendors.js'
         }),
         new HtmlWebpackPlugin({
-            filename: './index.html',
+            filename: 'index.html',
             template: './resources/assets/template/index.ejs',
             inject: false
         }),
@@ -48,6 +49,11 @@ module.exports = merge(webpackBaseConfig, {
         })
     ],
     devServer: {
-        quiet: true
+        quiet: true,
+        contentBase: path.resolve(__dirname, '..', 'template'),
+        compress: true,
+        host: '0.0.0.0',
+        historyApiFallback: true,
+        inline: true
     }
 });
