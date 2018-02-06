@@ -9,6 +9,8 @@
 /.vagrant
 /.DS_Store
 /coverage
+/.nyc_output
+/temp
 Homestead.json
 Homestead.yaml
 npm-debug.log

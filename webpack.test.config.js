@@ -5,7 +5,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = merge(webpackBaseConfig, {
     externals: [nodeExternals()],
-    devtool: 'inline-cheap-module-source-map',
     plugins: [
         new ExtractTextPlugin({
             filename: '[name].css',
