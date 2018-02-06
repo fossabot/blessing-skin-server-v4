@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const HappyPack = require('happypack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -31,11 +30,18 @@ module.exports = {
                             },
                             loaders: {
                                 less: ExtractTextPlugin.extract({
-                                    use: ['happypack/loader?id=less'],
+                                    use: [
+                                        'css-loader?minimize',
+                                        'autoprefixer-loader',
+                                        'less-loader'
+                                    ],
                                     fallback: 'vue-style-loader'
                                 }),
                                 css: ExtractTextPlugin.extract({
-                                    use: ['happypack/loader?id=less'],
+                                    use: [
+                                        'css-loader?minimize',
+                                        'autoprefixer-loader'
+                                    ],
                                     fallback: 'vue-style-loader'
                                 }),
                                 i18n: '@kazupon/vue-i18n-loader'
@@ -58,7 +64,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: ['happypack/loader?id=css'],
+                    use: [
+                        'css-loader?minimize',
+                        'autoprefixer-loader'
+                    ],
                     fallback: 'style-loader'
                 })
             },
@@ -88,18 +97,9 @@ module.exports = {
         }
     },
     plugins: [
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /(zh-cn|en-us)/),
-        new HappyPack({
-            id: 'css',
-            loaders: ['css-loader?minimize', 'autoprefixer-loader']
-        }),
-        new HappyPack({
-            id: 'less',
-            loaders: [
-                'css-loader?minimize',
-                'autoprefixer-loader',
-                'less-loader'
-            ]
-        })
+        new webpack.ContextReplacementPlugin(
+            /moment[\/\\]locale$/,
+            /(zh-cn|en-us)/
+        )
     ]
 };
