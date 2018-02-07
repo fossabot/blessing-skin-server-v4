@@ -343,9 +343,7 @@ describe('test `Dashboard` component', () => {
     it('sign', async () => {
         const fakeSign = sinon.stub();
         fakeSign.onFirstCall().rejects();
-        fakeSign
-            .onSecondCall()
-            .returns(Promise.resolve({ data: { userSign: { score: 50 } } }));
+        fakeSign.onSecondCall().resolves({ data: { userSign: { score: 50 } } });
         const $apollo = {
             mutate: fakeSign
         };
