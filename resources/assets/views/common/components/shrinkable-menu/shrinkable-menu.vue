@@ -33,7 +33,7 @@ export default Vue.extend({
             default: false
         },
         menuList: {
-            type:  Array,
+            type: Array,
             required: true
         },
         theme: {
