@@ -1,5 +1,5 @@
 <template>
-    <div ref="menu" :style="styles" class="ivu-shrinkable-menu">
+    <div v-show="showMenu" :style="styles" class="ivu-shrinkable-menu">
         <slot name="top"></slot>
         <sidebar-menu 
             v-show="!shrink"
@@ -33,18 +33,15 @@ export default Vue.extend({
             default: false
         },
         menuList: {
-            type: Array,
+            type:  Array,
             required: true
         },
         theme: {
             type: String,
             default: 'dark',
-            validator(val: string) {
+            validator: (val: string) => {
                 return ['dark', 'light'].includes(val);
             }
-        },
-        openNames: {
-            type: Array
         }
     },
     computed: {
@@ -60,21 +57,17 @@ export default Vue.extend({
             };
         }
     },
-    mounted() {
-        if (window.outerWidth <= 768) {
-            (this.$refs.menu as HTMLElement).style.display = 'none';
-        }
+    data() {
+        return {
+            showMenu: window.outerWidth > 768
+        };
     },
     watch: {
-        shrink(newValue) {
+        shrink(newValue: boolean): void {
             if (window.outerWidth <= 768) {
-                if (newValue) {
-                    (this.$refs.menu as HTMLElement).style.display = 'none';
-                } else {
-                    (this.$refs.menu as HTMLElement).style.display = 'block';
-                }
+                this.showMenu = !newValue;
             } else {
-                (this.$refs.menu as HTMLElement).style.display = 'block';
+                this.showMenu = true;
             }
         }
     }
