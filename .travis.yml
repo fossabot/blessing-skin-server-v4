@@ -45,6 +45,7 @@ matrix:
     - php: 7.2
       env: DB=sqlite
     - node_js: 8
+      sudo: required
       language: node_js
       addons:
         chrome: stable
@@ -52,7 +53,8 @@ matrix:
       install:
         - yarn
       before_script:
-        - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost
+        - sudo chown root /opt/google/chrome/chrome-sandbox
+        - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
       script:
         - yarn lint:check
         - yarn test
