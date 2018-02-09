@@ -401,7 +401,9 @@ describe('test `Dashboard` component', () => {
             }
         });
         expect(wrapper.find('.btn-sign').attributes()!.title).to.equal(
-            wrapper.vm.$t('last-sign', { time: '3 hours' })
+            wrapper.vm.$t('last-sign', {
+                time: moment.duration(3, 'hours').humanize()
+            })
         );
     });
 
@@ -411,6 +413,12 @@ describe('test `Dashboard` component', () => {
             i18n,
             stubs: {
                 'vue-markdown': true
+            }
+        });
+        wrapper.setData({
+            currentUser: {
+                ...wrapper.vm.$data.currentUser,
+                last_signed_at: '2000-01-01 00:00:00'
             }
         });
         const fakeSign = sinon.stub();
