@@ -1,7 +1,19 @@
 const webpackConfig = require('../build/webpack.test.conf');
 
-/*delete webpackConfig.entry;
-delete webpackConfig.output;*/
+function browsers() {
+    const os = process.platform;
+    const base =
+        process.env.CI && os !== 'linux'
+            ? []
+            : ['ChromeHeadless', 'FirefoxHeadless'];
+    if (process.platform === 'darwin') {
+        return base.concat(['Safari']);
+    } else if (process.platform === 'win32') {
+        return base.concat(['IE']);
+    } else {
+        return base;
+    }
+}
 
 module.exports = function(config) {
     config.set({
@@ -37,7 +49,7 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: [process.env.CI ? 'spec': 'nyan'],
+        reporters: [process.env.CI ? 'spec' : 'nyan'],
 
         // web server port
         port: 9876,
@@ -51,7 +63,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['ChromeHeadless', 'FirefoxHeadless'],
+        browsers: browsers(),
 
         // Concurrency level
         // how many browser should be started simultaneous
