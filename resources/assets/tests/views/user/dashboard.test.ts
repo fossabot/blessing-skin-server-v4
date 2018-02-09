@@ -384,7 +384,7 @@ describe('test `Dashboard` component', () => {
         ).to.be.true;
     });
 
-    it('tooltip of button `sign`', () => {
+    it('tooltip of button `sign`', async () => {
         const wrapper = shallow(Dashboard, {
             localVue,
             i18n,
@@ -400,7 +400,7 @@ describe('test `Dashboard` component', () => {
                     .format('YYYY-MM-DD kk:mm:ss')
             }
         });
-        wrapper.update();
+        await wrapper.vm.$nextTick();
         expect(wrapper.find('.btn-sign').attributes()!.title).to.equal(
             wrapper.vm.$t('last-sign', {
                 time: moment.duration(3, 'hours').humanize()
