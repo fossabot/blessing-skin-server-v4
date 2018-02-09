@@ -46,6 +46,9 @@ matrix:
       env: DB=sqlite
     - node_js: 8
       language: node_js
+      addons:
+        chrome: stable
+        firefox: latest
       install:
         - yarn
       before_script:
