@@ -1,6 +1,6 @@
 require('jsdom-global')();
 
-global.localStorage = new require('node-localstorage').LocalStorage('./temp');
+require('localstorage-polyfill');
 
 const Vue = require('vue');
 Vue.config.productionTip = false;
