@@ -6,13 +6,7 @@ function browsers() {
         process.env.CI && os !== 'linux'
             ? []
             : ['ChromeHeadless', 'FirefoxHeadless'];
-    if (process.platform === 'darwin') {
-        return base.concat(['Safari']);
-    } else if (process.platform === 'win32') {
-        return base.concat(['IE']);
-    } else {
-        return base;
-    }
+    return base.concat(os === 'darwin' ? ['Safari'] : []);
 }
 
 module.exports = function(config) {
