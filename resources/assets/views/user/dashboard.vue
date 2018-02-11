@@ -216,14 +216,14 @@ export default Vue.extend({
                             }
                         }
                     `,
-                    update(store, { data: { userSign } }) {
-                        const data: {
+                    update(store, { data }) {
+                        const current: {
                             currentUser: Object;
                         } | null = store.readQuery({ query: CURRENT_USER });
-                        Object.assign(data ? data.currentUser : {}, userSign);
+                        Object.assign(current ? current.currentUser : {}, data!.userSign);
                         return store.writeQuery({
                             query: CURRENT_USER,
-                            data
+                            data: current
                         });
                     }
                 });
