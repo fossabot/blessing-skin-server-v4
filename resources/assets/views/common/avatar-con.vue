@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import gql from 'graphql-tag';
 import i18n from '../../libs/i18n';
 
 export default Vue.extend({
@@ -71,8 +72,23 @@ export default Vue.extend({
             }
         }
     },
-    created() {
-        this.$store.dispatch('fetchUserInfo');
+    async created() {
+        const { data } = await this.$apollo.query({
+            query: gql`
+                query {
+                    currentUser {
+                        uid
+                        nickname
+                        email
+                        permission
+                    }
+                }
+            `
+        });
+        this.$store.commit(
+            'updateUserInfo',
+            (data as { currentUser: User }).currentUser
+        );
     },
     watch: {
         shrink(newValue: boolean) {
