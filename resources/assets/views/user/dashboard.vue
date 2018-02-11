@@ -220,7 +220,10 @@ export default Vue.extend({
                         const current: {
                             currentUser: Object;
                         } | null = store.readQuery({ query: CURRENT_USER });
-                        Object.assign(current ? current.currentUser : {}, data!.userSign);
+                        Object.assign(
+                            current ? current.currentUser : {},
+                            data!.userSign
+                        );
                         return store.writeQuery({
                             query: CURRENT_USER,
                             data: current
