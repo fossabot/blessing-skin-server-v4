@@ -400,6 +400,7 @@ describe('test `Dashboard` component', () => {
                     .format('YYYY-MM-DD kk:mm:ss')
             }
         });
+        wrapper.update();
         await wrapper.vm.$nextTick();
         expect(wrapper.find('.btn-sign').attributes()!.title).to.equal(
             wrapper.vm.$t('last-sign', {
