@@ -15,7 +15,7 @@
                         >{{ lang.text }}</i-dropdown-item>
                     </i-dropdown-menu>
                 </i-dropdown>
-                <i-dropdown transfer trigger="click" @on-click="logout">
+                <i-dropdown data-test-id="logout" transfer trigger="click" @on-click="logout">
                     <a style="cursor: pointer;">
                         <span class="main-user-name">{{ $store.state.user.nickname }}</span>
                         <i-icon type="arrow-down-b"></i-icon>
@@ -38,7 +38,7 @@ import i18n from '../../libs/i18n';
 export default Vue.extend({
     name: 'AvatarCon',
     props: {
-        shrink: Boolean
+        shrink:  Boolean
     },
     data() {
         return {
@@ -46,7 +46,7 @@ export default Vue.extend({
                 { text: '简体中文', value: 'zh-cn' },
                 { text: 'English', value: 'en' }
             ],
-            show: true
+            show: this.shrink
         };
     },
     computed: {
@@ -54,7 +54,7 @@ export default Vue.extend({
             const lang = this.langs.find(
                 lang => lang.value === this.$i18n.locale
             );
-            return lang ? lang.text : 'zh-cn';
+            return lang ? lang.text : '简体中文';
         }
     },
     methods: {
