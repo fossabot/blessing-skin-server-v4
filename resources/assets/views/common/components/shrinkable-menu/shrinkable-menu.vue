@@ -59,12 +59,12 @@ export default Vue.extend({
     },
     data() {
         return {
-            showMenu: window.outerWidth > 768
+            showMenu: window.innerWidth > 768
         };
     },
     watch: {
         shrink(newValue: boolean): void {
-            if (window.outerWidth <= 768) {
+            if (window.innerWidth <= 768) {
                 this.showMenu = !newValue;
             } else {
                 this.showMenu = true;

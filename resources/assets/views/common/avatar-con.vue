@@ -1,5 +1,5 @@
 <template>
-    <div v-show="show" class="header-avator-con">                    
+    <div v-show="shrink" class="header-avator-con">                    
         <div class="user-dropdown-menu-con">
             <i-row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                 <i-dropdown transfer trigger="click" @on-click="changeLang">
@@ -45,8 +45,7 @@ export default Vue.extend({
             langs: [
                 { text: '简体中文', value: 'zh-cn' },
                 { text: 'English', value: 'en' }
-            ],
-            show: this.shrink
+            ]
         };
     },
     computed: {
@@ -90,11 +89,6 @@ export default Vue.extend({
             'updateUserInfo',
             (data as { currentUser: User }).currentUser
         );
-    },
-    watch: {
-        shrink(newValue: boolean): void {
-            this.show = window.outerWidth <= 768 ? newValue : true;
-        }
     }
 });
 </script>

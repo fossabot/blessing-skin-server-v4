@@ -67,14 +67,14 @@ export default Vue.extend({
     },
     methods: {
         sidebarWidth() {
-            return window.outerWidth <= 768 ? '0' : '60px';
+            return window.innerWidth <= 768 ? '0' : '60px';
         },
         toggleSidebar() {
             this.shrink = !this.shrink;
         }
     },
     created() {
-        if (window.outerWidth <= 768) {
+        if (window.innerWidth <= 768) {
             this.shrink = true;
         }
     }

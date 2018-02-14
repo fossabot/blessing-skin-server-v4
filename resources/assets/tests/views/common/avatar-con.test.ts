@@ -35,17 +35,14 @@ describe('test `AvatarCon` component', () => {
             store,
             i18n,
             propsData: {
-                shrink: true
+                shrink: false
             }
         });
-        wrapper.setProps({ shrink: false });
-        await wrapper.vm.$nextTick();
         expect(
             wrapper.find('.header-avator-con').element.style.display
         ).to.equal('none');
 
         wrapper.setProps({ shrink: true });
-        await wrapper.vm.$nextTick();
         expect(
             wrapper.find('.header-avator-con').element.style.display
         ).to.equal('');
