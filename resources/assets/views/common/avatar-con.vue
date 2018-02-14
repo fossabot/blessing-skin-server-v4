@@ -71,7 +71,7 @@ export default Vue.extend({
                 await this.$ajax.post('/api/auth/logout');
                 this.$Message.success(this.$t('logout.success'));
                 this.$router.push('/');
-            } catch (error) {
+            } catch {
                 this.$Message.error(this.$t('logout.failed'));
             }
         }
