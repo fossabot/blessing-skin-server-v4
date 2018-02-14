@@ -1,5 +1,5 @@
 <template>
-    <div v-show="shrink" class="header-avator-con">                    
+    <div v-show="show" class="header-avator-con">                    
         <div class="user-dropdown-menu-con">
             <i-row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                 <i-dropdown transfer trigger="click" @on-click="changeLang">
@@ -38,7 +38,7 @@ import i18n from '../../libs/i18n';
 export default Vue.extend({
     name: 'AvatarCon',
     props: {
-        shrink:  Boolean
+        shrink: Boolean
     },
     data() {
         return {
@@ -54,6 +54,10 @@ export default Vue.extend({
                 lang => lang.value === this.$i18n.locale
             );
             return lang ? lang.text : '简体中文';
+        },
+        show(): boolean {
+            /* Test this in e2e test */
+            return window.innerWidth >= 768 || this.shrink;
         }
     },
     methods: {

@@ -29,25 +29,6 @@ const i18n = new VueI18n({
 });
 
 describe('test `AvatarCon` component', () => {
-    it('props', async () => {
-        const wrapper = shallow(AvatarCon, {
-            localVue,
-            store,
-            i18n,
-            propsData: {
-                shrink: false
-            }
-        });
-        expect(
-            wrapper.find('.header-avator-con').element.style.display
-        ).to.equal('none');
-
-        wrapper.setProps({ shrink: true });
-        expect(
-            wrapper.find('.header-avator-con').element.style.display
-        ).to.equal('');
-    });
-
     it('test `created` lifecycle hook', async () => {
         const mockApollo = sinon.stub();
         mockApollo.onFirstCall().resolves({ data: { currentUser: 'sth' } });
