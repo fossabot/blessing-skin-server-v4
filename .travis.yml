@@ -50,7 +50,6 @@ matrix:
       language: node_js
       addons:
         chrome: stable
-        firefox: latest
       install:
         - yarn
       before_script:
@@ -58,11 +57,4 @@ matrix:
         - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
       script:
         - yarn lint:check
-        - yarn test
-    - node_js: 8
-      language: node_js
-      os: osx
-      install:
-        - yarn
-      script:
         - yarn test

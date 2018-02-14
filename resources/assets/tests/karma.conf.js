@@ -1,14 +1,5 @@
 const webpackConfig = require('../build/webpack.test.conf');
 
-function browsers() {
-    const os = process.platform;
-    const base =
-        process.env.CI && os !== 'linux'
-            ? []
-            : ['ChromeHeadless', 'FirefoxHeadless'];
-    return base.concat(os === 'darwin' ? ['Safari'] : []);
-}
-
 module.exports = function(config) {
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -57,7 +48,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: browsers(),
+        browsers: ['ChromeHeadless'],
 
         // Concurrency level
         // how many browser should be started simultaneous
