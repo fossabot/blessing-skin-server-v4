@@ -7,6 +7,8 @@ Blessing Skin Server 是一款能让您上传、管理和分享您的 Minecraft 
 Blessing Skin Server 是一个开源的 PHP 项目，这意味着您可以自由地在您的服务器上部署它。这里有一个[演示站点](http://skin.prinzeugen.net/)。
 
 ## 特性
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fg-plane%2Fblessing-skin-server-v4.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fg-plane%2Fblessing-skin-server-v4?ref=badge_shield)
+
 - 支持单用户多个角色
 - 通过皮肤库来分享您的皮肤和披风！
 - 易于使用
@@ -96,3 +98,6 @@ Blessing Skin Server 程序是基于 GNU General Public License v3.0 开放源�
 **例外情况**：任何为 Blessing Skin Server 皮肤站程序开发、调用了 Blessing Skin 插件 API 的插件程序，在未使用 Blessing Skin Server 程序源代码的情况下，无须采用 GPL v3 协议，也不强制要求开放插件源代码。
 
 程序原作者为 [@printempw](https://blessing.studio/)，转载请注明。
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fg-plane%2Fblessing-skin-server-v4.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fg-plane%2Fblessing-skin-server-v4?ref=badge_large)
